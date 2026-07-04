@@ -1033,3 +1033,7 @@ header.site .wrap{max-width:1380px}
 .adm-ref-code:hover{border-color:var(--brass)}
 .adm-ref-hint{font-size:12px;color:var(--muted);margin:12px 0;line-height:1.5}
 .adm-ref-links{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Joined-via-HQ badge */
+.lead-src.hq{color:#e3cf9b;background:rgba(198,163,90,.14)}
+.lead-ic.hq{color:#e3cf9b;background:rgba(198,163,90,.1)}

@@ -19,6 +19,8 @@ export default function AdminUsers() {
   const [status, setStatus] = useState("active");
   const [hold, setHold] = useState({ title: "", tokens: "", amount: "" });
   const [newPass, setNewPass] = useState("");
+  const [headCode, setHeadCode] = useState("");
+  const [filter, setFilter] = useState<"all" | "partner" | "investor" | "hq">("all");
 
   const loadUsers = () => {
     setLoading(true);
@@ -29,6 +31,14 @@ export default function AdminUsers() {
       .finally(() => setLoading(false));
   };
   useEffect(loadUsers, []);
+  useEffect(() => {
+    fetch("/api/admin/head-ref")
+      .then((r) => r.json())
+      .then((d) => d?.ok && setHeadCode(d.code))
+      .catch(() => {});
+  }, []);
+
+  const viaHq = (u: AppUser) => !!headCode && u.referredBy === headCode;
 
   const openDetail = async (id: string) => {
     const r = await fetch(`/api/admin/users/${id}`);
@@ -113,7 +123,10 @@ export default function AdminUsers() {
           <div className="leads-head" style={{ marginBottom: "10px" }}>
             <div>
               <div className="lh-title">{u.name || u.email}</div>
-              <div className="lh-sub">{u.email} · {u.phone || "—"} · <span style={{ textTransform: "capitalize" }}>{u.role}</span></div>
+              <div className="lh-sub">
+                {u.email} · {u.phone || "—"} · <span style={{ textTransform: "capitalize" }}>{u.role}</span>
+                {u.referredBy && (viaHq(u) ? " · joined via HQ link" : ` · referred by ${u.referredBy}`)}
+              </div>
             </div>
           </div>
 
@@ -222,19 +235,42 @@ export default function AdminUsers() {
       </div>
     );
 
+  const counts = {
+    all: users.length,
+    partner: users.filter((u) => u.role === "partner").length,
+    investor: users.filter((u) => u.role === "investor").length,
+    hq: users.filter(viaHq).length,
+  };
+  const filtered = users.filter((u) =>
+    filter === "all" ? true : filter === "hq" ? viaHq(u) : u.role === filter
+  );
+
   return (
-    <div className="admin-list">
-      {users.map((u) => (
-        <button className="adm-item" key={u.id} style={{ textAlign: "left", cursor: "pointer" }} onClick={() => openDetail(u.id)}>
-          <span className={"lead-src " + (u.role === "partner" ? "partner" : "investor")} style={{ flexShrink: 0 }}>{u.role}</span>
-          <div className="ai-info">
-            <b>{u.name || u.email}</b>
-            <span>{u.email}{u.role === "partner" ? ` · ${fmt(u.commission)} commission` : ""}</span>
-          </div>
-          {u.resetRequested && <span className="lead-src wa" style={{ flexShrink: 0 }}>reset</span>}
-          <span className="lead-time">{u.createdAt ? new Date(u.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : ""}</span>
-        </button>
-      ))}
-    </div>
+    <>
+      <div className="lead-filter">
+        <button className={filter === "all" ? "on" : ""} onClick={() => setFilter("all")}>All ({counts.all})</button>
+        <button className={filter === "partner" ? "on" : ""} onClick={() => setFilter("partner")}>Partners ({counts.partner})</button>
+        <button className={filter === "investor" ? "on" : ""} onClick={() => setFilter("investor")}>Investors ({counts.investor})</button>
+        <button className={filter === "hq" ? "on" : ""} onClick={() => setFilter("hq")}>Joined via HQ ({counts.hq})</button>
+      </div>
+      {filtered.length === 0 ? (
+        <p className="db-muted">No users match this filter.</p>
+      ) : (
+        <div className="admin-list">
+          {filtered.map((u) => (
+            <button className="adm-item" key={u.id} style={{ textAlign: "left", cursor: "pointer" }} onClick={() => openDetail(u.id)}>
+              <span className={"lead-src " + (u.role === "partner" ? "partner" : "investor")} style={{ flexShrink: 0 }}>{u.role}</span>
+              <div className="ai-info">
+                <b>{u.name || u.email}</b>
+                <span>{u.email}{u.role === "partner" ? ` · ${fmt(u.commission)} commission` : ""}</span>
+              </div>
+              {viaHq(u) && <span className="lead-src hq" style={{ flexShrink: 0 }}>via HQ</span>}
+              {u.resetRequested && <span className="lead-src wa" style={{ flexShrink: 0 }}>reset</span>}
+              <span className="lead-time">{u.createdAt ? new Date(u.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : ""}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </>
   );
 }
