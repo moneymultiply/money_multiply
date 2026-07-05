@@ -92,6 +92,16 @@ export default function DashboardClient() {
       toast(u.referralCode);
     }
   };
+  const copyRefLink = async () => {
+    // partners refer investors only
+    const url = `${window.location.origin}/?ref=${u.referralCode}&role=investor`;
+    try {
+      await navigator.clipboard.writeText(url);
+      toast("Referral link copied");
+    } catch {
+      toast(url);
+    }
+  };
 
   const startEdit = () => {
     setEName(u.name);
@@ -191,13 +201,22 @@ export default function DashboardClient() {
             {isPartner && u.referralCode && (
               <div className="db-ref">
                 <div className="db-ref-l">Your referral code</div>
-                <button className="db-ref-code" onClick={copyCode} title="Copy">
+                <button className="db-ref-code" onClick={copyCode} title="Copy code">
                   {u.referralCode}
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8">
                     <rect x="9" y="9" width="11" height="11" rx="2" />
                     <path d="M5 15V5a2 2 0 0 1 2-2h10" />
                   </svg>
                 </button>
+                <div style={{ marginTop: "12px" }}>
+                  <button className="btn-mini" onClick={copyRefLink}>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1" /></svg>
+                    Copy investor referral link
+                  </button>
+                </div>
+                <p className="db-muted" style={{ fontSize: "11.5px", marginTop: "10px" }}>
+                  Share this with investors — anyone who signs up through your link is credited to you.
+                </p>
               </div>
             )}
           </aside>
