@@ -6,10 +6,26 @@ import { SEED } from "@/lib/data";
 import type { Listing } from "@/lib/types";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.moneymultiplyglobal.com"),
   title: "Money Multiply — The Land Bankers & Traders | Tokenised Land Marketplace",
   description:
     "A luxury land-banking and tokenised-investment marketplace. Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor.",
-  icons: { icon: "/images/emblem.png" },
+  icons: { icon: "/images/MM_Icon.png", apple: "/images/MM_Icon.png" },
+  openGraph: {
+    type: "website",
+    siteName: "Money Multiply",
+    url: "https://www.moneymultiplyglobal.com",
+    title: "Money Multiply — The Land Bankers & Traders",
+    description:
+      "Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
+    images: [{ url: "/images/logo-mark.png", width: 1536, height: 1024, alt: "Money Multiply" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Money Multiply — The Land Bankers & Traders",
+    description: "Tokenised land-banking marketplace — fractional ownership from ₹5,00,000.",
+    images: ["/images/logo-mark.png"],
+  },
 };
 
 export const viewport: Viewport = {
