@@ -21,7 +21,7 @@ export const SECTION_IMAGES = {
 };
 
 /* ---- contact / business constants ---- */
-export const WA = "9911176822";
+export const WA = "919911176822"; // wa.me needs country code (91) — no '+'
 export const EMAIL = "Mashutoshkumar325@gmail.com";
 export const CONTACT_EMAIL = "info@moneymultiplyglobal.com";
 export const PHONE_TEL = "+919911176822";
