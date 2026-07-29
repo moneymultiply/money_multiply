@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import ListingCard from "@/components/ListingCard";
 import InvestorPayments from "./InvestorPayments";
+import MicroFundingPool from "./MicroFundingPool";
 import type { BankDetails, Holding } from "@/lib/types";
 
 interface Referral {
@@ -307,6 +308,7 @@ export default function DashboardClient() {
                     View my deed
                   </Link>
                 </div>
+                <MicroFundingPool />
                 <InvestorPayments />
                 <div className="db-card">
                   <h3 className="db-h3">My reservations</h3>

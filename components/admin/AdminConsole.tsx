@@ -8,6 +8,7 @@ import { DonutSVG, Sparkline } from "./charts";
 import AdminForm from "./AdminForm";
 import AdminUsers from "./AdminUsers";
 import AdminPayments from "./AdminPayments";
+import AdminMicro from "./AdminMicro";
 import AdminHeadRef from "./AdminHeadRef";
 import type { Lead, LeadSource, Listing } from "@/lib/types";
 
@@ -51,7 +52,7 @@ export default function AdminConsole({
 }) {
   const { listings, leads, currency, fmt, fmtPlain, logout, deleteListing, clearLeads, toast } =
     useMarketplace();
-  const [tab, setTab] = useState<"dash" | "leads" | "list" | "users" | "payments">("dash");
+  const [tab, setTab] = useState<"dash" | "leads" | "list" | "users" | "payments" | "micro">("dash");
   const [editing, setEditing] = useState<Listing | null | undefined>(undefined); // undefined = no form
   const [leadFilter, setLeadFilter] = useState<"all" | LeadSource>("all");
 
@@ -141,6 +142,13 @@ export default function AdminConsole({
             </svg>
             Payments
           </button>
+          <button className={"tab" + (tab === "micro" ? " on" : "")} onClick={() => setTab("micro")}>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v10M9.5 9.2c0-1 1.1-1.7 2.5-1.7s2.5.7 2.5 1.7-1.1 1.6-2.5 1.6-2.5.7-2.5 1.7 1.1 1.7 2.5 1.7 2.5-.7 2.5-1.7" />
+            </svg>
+            Micro Pool
+          </button>
         </div>
 
         <div id="admTabBody">
@@ -179,6 +187,7 @@ export default function AdminConsole({
           )}
           {tab === "users" && <AdminUsers />}
           {tab === "payments" && <AdminPayments />}
+          {tab === "micro" && <AdminMicro />}
         </div>
 
         <div style={{ display: "flex", gap: "10px", marginTop: "18px", flexWrap: "wrap" }}>

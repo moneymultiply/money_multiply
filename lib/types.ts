@@ -74,6 +74,19 @@ export interface Payment {
   ackAt?: string;
 }
 
+export interface MicroContribution {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  amount: number;
+  note: string;
+  status: "pledged" | "funded" | "closed";
+  adminNote: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 export interface Holding {
   id: string;
   userId: string;

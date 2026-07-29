@@ -124,3 +124,23 @@ create index if not exists mm_payments_user_idx on public.mm_payments (user_id);
 create index if not exists mm_payments_status_idx on public.mm_payments (status, created_at desc);
 alter table public.mm_payments enable row level security;
 alter table public.mm_payments force row level security;
+
+-- ============================================================
+-- MICRO FUNDING POOL (investor small-ticket commitments ₹10k–₹5L)
+-- ============================================================
+create table if not exists public.mm_micro (
+  id         text primary key,
+  user_id    text not null,
+  user_name  text default '',
+  user_email text default '',
+  amount     bigint not null default 0,
+  note       text default '',
+  status     text not null default 'pledged',   -- pledged | funded | closed
+  admin_note text default '',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz
+);
+create index if not exists mm_micro_user_idx on public.mm_micro (user_id);
+create index if not exists mm_micro_status_idx on public.mm_micro (status, created_at desc);
+alter table public.mm_micro enable row level security;
+alter table public.mm_micro force row level security;

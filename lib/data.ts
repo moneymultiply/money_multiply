@@ -38,6 +38,12 @@ export const COMPANY_BANK = {
   upiQr: "/images/upi-qr.png",
 };
 
+/* ---- micro funding pool (investor small-ticket commitments) ---- */
+export const MICRO_MIN = 10000;   // ₹10,000
+export const MICRO_MAX = 500000;  // ₹5,00,000
+/** quick-select ticket sizes shown in the pool */
+export const MICRO_TICKETS = [10000, 25000, 50000, 100000, 250000, 500000];
+
 /* ---- admin auth (client-side demo) ---- */
 export const ADMIN_PASS_DEFAULT = "MM@2026";
 export const OTP_PRIMARY_EMAIL = "info@moneymultiplyglobal.com";
