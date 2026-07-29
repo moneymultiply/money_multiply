@@ -198,6 +198,21 @@ export default function SiteFooter() {
             </span>
             moneymultiplyglobal.com
           </a>
+          <span className="fc-div" />
+          <a
+            className="fc-item"
+            href="https://www.google.com/maps?q=B-128,+First+Floor,+Sector-2+Noida,+Gautam+Buddha+Nagar,+Uttar+Pradesh+201301"
+            target="_blank"
+            rel="noopener"
+          >
+            <span className="fc-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+            </span>
+            B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, UP 201301
+          </a>
           <div className="foot-soc">
             <a href="#" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor">

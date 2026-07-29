@@ -25,10 +25,10 @@ export default function PartnerAgreement({
         </div>
         <div className="ag-legal">
           <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b>
-          <span>Flat No. 151, 1st Floor, Saraswati Galleria, Bisrakh,</span>
-          <span>Greater Noida, Gautam Buddha Nagar, UP — 201306</span>
+          <span>B-128, First Floor, Sector-2 Noida,</span>
+          <span>Gautam Buddha Nagar, Uttar Pradesh 201301</span>
           <span>CIN: U70200UP2026PTC253626 | GSTIN: 09AAVCM0034C1ZL</span>
-          <span>Web: moneymultiplyglobal.com | Email: info@moneymultiply.in</span>
+          <span>Web: moneymultiplyglobal.com | Email: info@moneymultiplyglobal.com</span>
         </div>
       </div>
       <div className="ag-rule" />
