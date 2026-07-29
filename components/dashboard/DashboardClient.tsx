@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import ListingCard from "@/components/ListingCard";
+import InvestorPayments from "./InvestorPayments";
 import type { BankDetails, Holding } from "@/lib/types";
 
 interface Referral {
@@ -287,9 +288,29 @@ export default function DashboardClient() {
                 </div>
               </>
             ) : (
-              <div className="db-card">
-                <h3 className="db-h3">My reservations</h3>
-                {holdings.length === 0 ? (
+              <>
+                <div className="db-card">
+                  <div className="db-card-head">
+                    <h3 className="db-h3" style={{ margin: 0 }}>Co-Investment Deed</h3>
+                    <Link href="/agreement" className="db-link">View &amp; download →</Link>
+                  </div>
+                  <p className="db-muted" style={{ marginTop: "12px" }}>
+                    Your Confidential Master Deed of Co-Investment (Himalayan Hills Cottage, Ranikhet)
+                    has been generated in the name of <b>{u.name}</b> — ₹5,00,000 principal, targeting
+                    2× over 48 months. Open it to review the terms and save a signed PDF.
+                  </p>
+                  <Link href="/agreement" className="btn-gold" style={{ display: "inline-flex", padding: "11px 20px", marginTop: "14px", borderRadius: "10px", textDecoration: "none" }}>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ marginRight: "8px" }}>
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+                      <path d="M14 2v6h6M9 15l2 2 4-4" />
+                    </svg>
+                    View my deed
+                  </Link>
+                </div>
+                <InvestorPayments />
+                <div className="db-card">
+                  <h3 className="db-h3">My reservations</h3>
+                  {holdings.length === 0 ? (
                   <p className="db-muted">No reservations yet. Reserve tokens on any opportunity and our team records your allocation here.</p>
                 ) : (
                   <table className="pd-fin">
@@ -307,8 +328,9 @@ export default function DashboardClient() {
                       ))}
                     </tbody>
                   </table>
-                )}
-              </div>
+                  )}
+                </div>
+              </>
             )}
 
             {/* saved opportunities */}

@@ -59,6 +59,21 @@ export interface AppUser {
   createdAt?: string;
 }
 
+export interface Payment {
+  id: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  amount: number;
+  reference: string;
+  note: string;
+  status: "submitted" | "acknowledged" | "rejected";
+  ackNote: string;
+  slipUrl?: string; // signed URL, admin only
+  createdAt?: string;
+  ackAt?: string;
+}
+
 export interface Holding {
   id: string;
   userId: string;

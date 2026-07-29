@@ -102,3 +102,25 @@ alter table public.mm_users add column if not exists avatar text not null defaul
 
 -- Admin "head" referral code (shareable partner/investor invite). Idempotent.
 alter table public.mm_admin_auth add column if not exists head_ref text not null default '';
+
+-- ============================================================
+-- INVESTOR PAYMENTS (bank-transfer proof + admin acknowledgement)
+-- ============================================================
+create table if not exists public.mm_payments (
+  id         text primary key,
+  user_id    text not null,
+  user_name  text default '',
+  user_email text default '',
+  amount     bigint not null default 0,
+  reference  text default '',
+  note       text default '',
+  slip_path  text default '',
+  status     text not null default 'submitted',
+  ack_note   text default '',
+  created_at timestamptz not null default now(),
+  ack_at     timestamptz
+);
+create index if not exists mm_payments_user_idx on public.mm_payments (user_id);
+create index if not exists mm_payments_status_idx on public.mm_payments (status, created_at desc);
+alter table public.mm_payments enable row level security;
+alter table public.mm_payments force row level security;
