@@ -3,18 +3,43 @@ import "./globals.css";
 import { MarketplaceProvider } from "@/context/MarketplaceContext";
 import { getListings } from "@/lib/listings-server";
 import { SEED } from "@/lib/data";
+import { SITE_URL, SITE_NAME, LEGAL_NAME, SITE_KEYWORDS, organizationLd, websiteLd } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
 import type { Listing } from "@/lib/types";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.moneymultiplyglobal.com"),
-  title: "Money Multiply — The Land Bankers & Traders | Tokenised Land Marketplace",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Money Multiply — The Land Bankers & Traders | Tokenised Land Marketplace",
+    template: "%s | Money Multiply",
+  },
   description:
-    "A luxury land-banking and tokenised-investment marketplace. Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor.",
+    "A luxury land-banking and tokenised-investment marketplace. Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
+  applicationName: SITE_NAME,
+  keywords: SITE_KEYWORDS,
+  authors: [{ name: LEGAL_NAME }],
+  creator: SITE_NAME,
+  publisher: LEGAL_NAME,
+  category: "finance",
+  alternates: { canonical: "/" },
   icons: { icon: "/images/MM_Icon.png", apple: "/images/MM_Icon.png" },
+  formatDetection: { telephone: true, email: true, address: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     type: "website",
-    siteName: "Money Multiply",
-    url: "https://www.moneymultiplyglobal.com",
+    siteName: SITE_NAME,
+    locale: "en_IN",
+    url: SITE_URL,
     title: "Money Multiply — The Land Bankers & Traders",
     description:
       "Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
@@ -56,6 +81,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body>
+        <JsonLd data={[organizationLd(), websiteLd()]} />
         <MarketplaceProvider initialListings={initialListings}>{children}</MarketplaceProvider>
       </body>
     </html>
