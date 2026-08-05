@@ -13,6 +13,11 @@ import ProductDetail from "@/components/property/ProductDetail";
 import JsonLd from "@/components/seo/JsonLd";
 import { ogImageFor, listingLd, breadcrumbLd, SITE_KEYWORDS } from "@/lib/seo";
 
+// Cached like the rest of the site; purged on-demand when an admin saves this
+// listing (revalidatePath in the admin API), with a slow safety-net refresh.
+export const revalidate = 3600;
+
+// Pre-build the known listings; any created later render on first visit and cache.
 export async function generateStaticParams() {
   try {
     const listings = await getListings();
@@ -37,13 +42,13 @@ export async function generateMetadata({
   const canonical = `/property/${l.id}`;
   const description =
     (l.desc?.trim()?.slice(0, 158) ||
-      `${l.title} — a tokenised land-banking opportunity in ${l.loc}. Fractional tokens from ₹${l.token.toLocaleString("en-IN")}.`);
+      `${l.title} — a fractional land-banking opportunity in ${l.loc}. Fractions from ₹${l.token.toLocaleString("en-IN")}.`);
   const image = ogImageFor(l);
 
   return {
     title: `${l.title} — ${l.loc}`,
     description,
-    keywords: [l.title, l.loc, l.cat, "tokenised land", "fractional ownership", ...SITE_KEYWORDS],
+    keywords: [l.title, l.loc, l.cat, "fractional land", "fractional ownership", ...SITE_KEYWORDS],
     alternates: { canonical },
     openGraph: {
       type: "website",

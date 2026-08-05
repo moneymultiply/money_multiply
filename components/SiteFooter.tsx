@@ -32,7 +32,7 @@ export default function SiteFooter() {
             Begin Today
           </span>
           <h2>
-            Your stake in the <em>next India</em> starts with one token.
+            Your stake in the <em>next India</em> starts with one fraction.
           </h2>
           <p>
             Talk to a Money Multiply relationship manager on WhatsApp, or drop us an email. No
@@ -104,7 +104,7 @@ export default function SiteFooter() {
             <div className="foot-col">
               <h5>Investments</h5>
               <a href="#marketplace"><i className="fchev">›</i>Marketplace</a>
-              <a href="#marketplace"><i className="fchev">›</i>Tokenised Properties</a>
+              <a href="#marketplace"><i className="fchev">›</i>Fractional Properties</a>
               <a href="#how"><i className="fchev">›</i>How It Works</a>
               <a
                 href={genericWa()}
@@ -129,7 +129,7 @@ export default function SiteFooter() {
               <a href="#"><i className="fchev">›</i>Privacy Policy</a>
               <a href="#"><i className="fchev">›</i>Terms of Use</a>
               <a href="#"><i className="fchev">›</i>Risk Disclosure</a>
-              <a href="#"><i className="fchev">›</i>Token Disclaimer</a>
+              <a href="#"><i className="fchev">›</i>Fraction Disclaimer</a>
               <a href="#"><i className="fchev">›</i>Compliance</a>
             </div>
           </div>
@@ -247,7 +247,7 @@ export default function SiteFooter() {
         >
           <p>© 2026 Money Multiply Trading &amp; Consultant Pvt. Ltd. · All rights reserved.</p>
           <p style={{ opacity: 0.75 }}>
-            Real Estate Tokenisation Platform · Fractional Ownership · Global Opportunities
+            Real Estate Fractionalisation Platform · Fractional Ownership · Global Opportunities
           </p>
         </div>
       </div>

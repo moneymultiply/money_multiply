@@ -14,14 +14,14 @@ export default function HowItWorks() {
             From browsing to <em>ownership</em>, in four steps
           </h2>
           <p>
-            Tokenisation lets you own a verified fraction of a high-value asset — without the ticket
+            Fractionalisation lets you own a verified fraction of a high-value asset — without the ticket
             size, paperwork, or guesswork of buying land alone.
           </p>
         </div>
         <div className="split reveal scale" style={{ marginBottom: "54px" }}>
           <div className="split-media magnet">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={SECTION_IMAGES.howFlow} alt="Tokenised land flow" />
+            <img src={SECTION_IMAGES.howFlow} alt="Fractional land flow" />
             <div className="floatcard">
               <div>
                 <div className="fc-n">₹5,00,000</div>
@@ -48,7 +48,7 @@ export default function HowItWorks() {
             </h2>
             <p style={{ color: "var(--muted)", fontSize: "15.5px", lineHeight: 1.7 }}>
               Your capital is pooled into a single, title-clear asset and held in a structured,
-              transparent vehicle. Each token maps to a precise share of the project — so you always
+              transparent vehicle. Each fraction maps to a precise share of the project — so you always
               know exactly what you own.
             </p>
             <div className="proof">
@@ -89,15 +89,15 @@ export default function HowItWorks() {
               <path d="m9 12 2 2 4-4" />
             </svg>
             <h4>Verify</h4>
-            <p>Review the project cost, legal title, RERA status and the per-token economics — all upfront.</p>
+            <p>Review the project cost, legal title, RERA status and the per-fraction economics — all upfront.</p>
           </div>
           <div className="step">
             <svg className="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
               <rect x="3" y="6" width="18" height="13" rx="2" />
               <path d="M3 10h18M7 15h4" />
             </svg>
-            <h4>Reserve tokens</h4>
-            <p>Choose how many tokens to hold. Your tokenised stake maps directly to your share of the asset.</p>
+            <h4>Reserve fractions</h4>
+            <p>Choose how many fractions to hold. Your fractional stake maps directly to your share of the asset.</p>
           </div>
           <div className="step">
             <svg className="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">

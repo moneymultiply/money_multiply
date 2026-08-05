@@ -110,7 +110,7 @@ export default function InvestorPayments() {
         <div className="field"><label>Amount paid (₹)</label><input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="500000" /></div>
         <div className="field"><label>UTR / reference (optional)</label><input value={reference} onChange={(e) => setReference(e.target.value)} placeholder="Bank transaction ref" /></div>
       </div>
-      <div className="field"><label>Note (optional)</label><input value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Himalayan Hills — 1 token" /></div>
+      <div className="field"><label>Note (optional)</label><input value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. Himalayan Hills — 1 fraction" /></div>
       <div className="field">
         <label>Payment slip (image or PDF)</label>
         <input type="file" accept="image/*,application/pdf" onChange={(e) => setFile(e.target.files?.[0] || null)} />

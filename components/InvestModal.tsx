@@ -53,7 +53,7 @@ export default function InvestModal() {
               <div className="mv gold">{fmt(l.total)}</div>
             </div>
             <div className="metric">
-              <div className="ml">Token price</div>
+              <div className="ml">Fraction price</div>
               <div className="mv">{fmtPlain(l.token)}</div>
             </div>
             <div className="metric">
@@ -67,7 +67,7 @@ export default function InvestModal() {
           </div>
           <div className="invest-calc">
             <div className="ic-row">
-              <span className="icl">How many tokens?</span>
+              <span className="icl">How many fractions?</span>
               <div className="stepper">
                 <button onClick={() => setTokens((t) => clamp(t - 1))}>−</button>
                 <input

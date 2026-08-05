@@ -115,7 +115,7 @@ export default function Hero() {
             </h1>
             <p className="lede">
               A curated marketplace for title-clear land banks and Grade-A developments across the
-              Greater Noida growth corridor — now investable in tokenised sizes from ₹5,00,000.
+              Greater Noida growth corridor — now investable in fractional sizes from ₹5,00,000.
             </p>
             <div className="hero-cta">
               <a className="btn-gold" href="#marketplace">
@@ -125,7 +125,7 @@ export default function Hero() {
                 </svg>
               </a>
               <a className="btn-ghost" href="#how">
-                How tokenised land works
+                How fractional land works
               </a>
             </div>
             <div className="hero-stats">
@@ -164,7 +164,7 @@ export default function Hero() {
                     <span className="v gold">{fmt(featured.total)}</span>
                   </div>
                   <div className="hc-row">
-                    <span className="k">Token price</span>
+                    <span className="k">Fraction price</span>
                     <span className="v">{fmtPlain(featured.token)}</span>
                   </div>
                   <div className="hc-row">

@@ -57,7 +57,7 @@ export default function About() {
               for those with crores to deploy and the right relationships. We are changing that.
             </p>
             <p style={{ color: "var(--muted)", fontSize: "15.5px", lineHeight: 1.7 }}>
-              By tokenising title-clear assets into small, documented fractions, we let everyday
+              By fractionalising title-clear assets into small, documented fractions, we let everyday
               investors own a real stake in India&apos;s growth corridors — with the diligence,
               transparency and human guidance the asset class deserves.
             </p>
@@ -244,7 +244,7 @@ export default function About() {
               </svg>
             </div>
             <h4>Documented ownership</h4>
-            <p>Your tokenised allocation maps to clear paperwork at every step of the holding period.</p>
+            <p>Your fractional allocation maps to clear paperwork at every step of the holding period.</p>
           </div>
         </div>
 

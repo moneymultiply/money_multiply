@@ -258,7 +258,7 @@ function Dashboard({
           <Sparkline seed={2} w={52} h={22} col="#c6a35a" />
         </div>
         <div className="kpi">
-          <div className="kl">Tokens Allotted</div>
+          <div className="kl">Fractions Allotted</div>
           <div className="kv">
             <AnimatedNumber to={a.tokensSold} format={fmtInt} />
           </div>
@@ -297,7 +297,7 @@ function Dashboard({
         </div>
         <div className="panel">
           <h4>Funding progress</h4>
-          <div className="psub">Tokens allotted vs available, by project</div>
+          <div className="psub">Fractions allotted vs available, by project</div>
           <div className="bars" ref={barsRef}>
             {listings.map((l) => {
               const pct = fundedPct(l);
@@ -501,7 +501,7 @@ function Listings({
             <div className="ai-info">
               <b>{l.title}</b>
               <span>
-                {l.cat} · {fmt(l.total)} · {fmtPlain(l.token)}/token
+                {l.cat} · {fmt(l.total)} · {fmtPlain(l.token)}/fraction
               </span>
             </div>
             <div className="adm-actions">

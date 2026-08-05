@@ -6,7 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: `${SITE_NAME} — ${SITE_TAGLINE}`,
     short_name: SITE_NAME,
     description:
-      "A luxury land-banking and tokenised-investment marketplace. Own fractional tokens in title-clear land across the Greater Noida growth corridor.",
+      "A luxury land-banking and fractional-investment marketplace. Own verified fractions of title-clear land across the Greater Noida growth corridor.",
     start_url: "/",
     display: "standalone",
     background_color: "#0a0f0c",

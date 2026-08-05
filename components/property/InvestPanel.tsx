@@ -19,7 +19,7 @@ export default function InvestPanel({ l }: { l: Listing }) {
     <div className="pd-invest">
       <div className="pi-top">
         <div>
-          <div className="k">Price per token</div>
+          <div className="k">Price per fraction</div>
           <div className="pi-price">{fmtPlain(l.token)}</div>
         </div>
         <div style={{ textAlign: "right" }}>
@@ -32,7 +32,7 @@ export default function InvestPanel({ l }: { l: Listing }) {
         <span>
           <b>{pct}%</b> funded
         </span>
-        <span>{avail.toLocaleString("en-IN")} tokens left</span>
+        <span>{avail.toLocaleString("en-IN")} fractions left</span>
       </div>
       <div className="prog">
         <i style={{ width: pct + "%" }} />
@@ -40,7 +40,7 @@ export default function InvestPanel({ l }: { l: Listing }) {
 
       <div className="pi-div" />
 
-      <div className="pi-lab">Number of tokens</div>
+      <div className="pi-lab">Number of fractions</div>
       <div className="stepper">
         <button onClick={() => setTokens((t) => clamp(t - 1))}>−</button>
         <input

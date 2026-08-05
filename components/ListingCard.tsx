@@ -39,7 +39,7 @@ export default function ListingCard({ l }: { l: Listing }) {
             <div className="mv gold">{fmt(l.total)}</div>
           </div>
           <div className="metric">
-            <div className="ml">Token price</div>
+            <div className="ml">Fraction price</div>
             <div className="mv">{fmtPlain(l.token)}</div>
           </div>
           <div className="metric">
@@ -59,12 +59,12 @@ export default function ListingCard({ l }: { l: Listing }) {
           <i style={{ width: pct + "%" }} />
         </div>
         <div className="subbar">
-          <span>{avail.toLocaleString("en-IN")} tokens left</span>
+          <span>{avail.toLocaleString("en-IN")} fractions left</span>
           <span>{l.size}</span>
         </div>
         <div className="card-foot">
           <button className="btn-gold" onClick={() => openInvest(l.id)}>
-            Invest in tokens
+            Invest in fractions
           </button>
           <a
             className="btn-wa"

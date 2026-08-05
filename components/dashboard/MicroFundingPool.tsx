@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import { MICRO_MIN, MICRO_MAX, MICRO_TICKETS } from "@/lib/data";
 import type { MicroContribution } from "@/lib/types";
@@ -47,7 +48,7 @@ export default function MicroFundingPool() {
       const d = await r.json().catch(() => ({}));
       setBusy(false);
       if (r.ok && d.ok) {
-        toast("Micro contribution committed");
+        toast("Committed — your agreement is ready below");
         setAmount(""); setNote("");
         load();
       } else if (d.error === "range") {
@@ -132,15 +133,17 @@ export default function MicroFundingPool() {
           <h4 className="pd-sub">Your micro contributions</h4>
           <table className="pd-fin">
             <thead>
-              <tr><td>Date</td><td>Amount</td><td>Note</td><td style={{ textAlign: "right" }}>Status</td></tr>
+              <tr><td>Date</td><td>Amount</td><td>Status</td><td style={{ textAlign: "right" }}>Agreement</td></tr>
             </thead>
             <tbody>
               {items.map((m) => (
                 <tr key={m.id}>
                   <td>{m.createdAt ? new Date(m.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "—"}</td>
                   <td>{fmt(m.amount)}</td>
-                  <td style={{ color: "var(--muted)", fontSize: "12px" }}>{m.note || "—"}</td>
-                  <td style={{ textAlign: "right" }}><span className={"pay-badge mfp-" + m.status}>{STATUS_LABEL[m.status] || m.status}</span></td>
+                  <td><span className={"pay-badge mfp-" + m.status}>{STATUS_LABEL[m.status] || m.status}</span></td>
+                  <td style={{ textAlign: "right" }}>
+                    <Link href={`/agreement/micro/${m.id}`} className="db-link">View &amp; download →</Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

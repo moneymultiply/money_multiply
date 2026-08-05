@@ -29,7 +29,7 @@ export default function WhyInvest() {
               </svg>
             </div>
             <h4>Fractional, from ₹5,00,000</h4>
-            <p>Tokenisation breaks crore-scale projects into accessible tokens, so you can build a land portfolio gradually.</p>
+            <p>Fractional ownership breaks crore-scale projects into accessible fractions, so you can build a land portfolio gradually.</p>
           </div>
           <div className="pillar">
             <div className="pic">
@@ -39,7 +39,7 @@ export default function WhyInvest() {
               </svg>
             </div>
             <h4>Transparent economics</h4>
-            <p>Total project cost, token price, units available and target IRR are shown on every listing — no hidden math.</p>
+            <p>Total project cost, fraction price, units available and target IRR are shown on every listing — no hidden math.</p>
           </div>
         </div>
       </div>

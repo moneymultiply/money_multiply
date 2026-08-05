@@ -139,7 +139,7 @@ export default function AdminForm({ editing, onDone }: { editing: Listing | null
             <input type="number" value={f.total} onChange={set("total")} placeholder="480000000" />
           </div>
           <div className="field">
-            <label>Token price (₹)</label>
+            <label>Fraction price (₹)</label>
             <input type="number" value={f.token} onChange={set("token")} placeholder="25000" />
           </div>
         </div>

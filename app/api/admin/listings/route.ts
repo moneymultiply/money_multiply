@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { isAdminRequest } from "@/lib/guard";
 import { createListing } from "@/lib/listings-server";
 import type { Listing } from "@/lib/types";
@@ -15,6 +16,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "invalid" }, { status: 400 });
     }
     const created = await createListing(l);
+    // Purge the cached public pages so the new listing (and its image) shows up now.
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true, listing: created });
   } catch (e) {
     return NextResponse.json(

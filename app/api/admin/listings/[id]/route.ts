@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { isAdminRequest } from "@/lib/guard";
 import { updateListing, deleteListing } from "@/lib/listings-server";
 import type { Listing } from "@/lib/types";
@@ -13,6 +14,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   try {
     const l = (await req.json()) as Listing;
     const updated = await updateListing(id, l);
+    // Purge cached public pages so edits (incl. new images) reflect immediately.
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true, listing: updated });
   } catch (e) {
     return NextResponse.json(
@@ -29,6 +32,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
   const { id } = await params;
   try {
     await deleteListing(id);
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true });
   } catch (e) {
     return NextResponse.json(

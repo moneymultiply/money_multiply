@@ -10,11 +10,11 @@ import type { Listing } from "@/lib/types";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Money Multiply — The Land Bankers & Traders | Tokenised Land Marketplace",
+    default: "Money Multiply — The Land Bankers & Traders | Fractional Land Marketplace",
     template: "%s | Money Multiply",
   },
   description:
-    "A luxury land-banking and tokenised-investment marketplace. Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
+    "A luxury land-banking and fractional-investment marketplace. Own verified fractions of title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
   applicationName: SITE_NAME,
   keywords: SITE_KEYWORDS,
   authors: [{ name: LEGAL_NAME }],
@@ -42,16 +42,22 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: "Money Multiply — The Land Bankers & Traders",
     description:
-      "Own fractional tokens in title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
+      "Own verified fractions of title-clear land and Grade-A developments across the Greater Noida growth corridor. Investable from ₹5,00,000.",
     images: [{ url: "/images/logo-mark.png", width: 1536, height: 1024, alt: "Money Multiply" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Money Multiply — The Land Bankers & Traders",
-    description: "Tokenised land-banking marketplace — fractional ownership from ₹5,00,000.",
+    description: "Fractional land-banking marketplace — ownership from ₹5,00,000.",
     images: ["/images/logo-mark.png"],
   },
 };
+
+// Listings (incl. admin-uploaded images) live in Supabase. Pages are cached for
+// speed but purged instantly when an admin saves a listing (revalidatePath in
+// the admin API routes). This `revalidate` is only a slow safety-net refresh so
+// data still self-heals even if an on-demand purge is ever missed.
+export const revalidate = 3600;
 
 export const viewport: Viewport = {
   width: "device-width",

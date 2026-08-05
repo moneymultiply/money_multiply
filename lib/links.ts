@@ -20,7 +20,7 @@ export function enquiryMsg(l: Listing, cur: Currency): string {
     l.loc +
     ").\nTotal project cost: " +
     fmtPlain(l.total, cur) +
-    "\nToken price: " +
+    "\nFraction price: " +
     fmtPlain(l.token, cur) +
     "\nPlease share the investment details and next steps."
   );
@@ -39,11 +39,11 @@ export function waInvest(l: Listing, tokens: number, cur: Currency): string {
   return waLink(
     "Hello Money Multiply, I'd like to reserve *" +
       tokens +
-      " token(s)* in *" +
+      " fraction(s)* in *" +
       l.title +
       "* (" +
       l.loc +
-      ").\nToken price: " +
+      ").\nFraction price: " +
       fmtPlain(l.token, cur) +
       "\nMy investment: " +
       fmtPlain(amt, cur) +
@@ -54,7 +54,7 @@ export function waInvest(l: Listing, tokens: number, cur: Currency): string {
 }
 
 export const GENERIC_MSG =
-  "Hello Money Multiply, I'd like to know more about your tokenised land investment opportunities.";
+  "Hello Money Multiply, I'd like to know more about your fractional land investment opportunities.";
 
 export function genericWa(): string {
   return waLink(GENERIC_MSG);

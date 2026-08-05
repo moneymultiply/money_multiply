@@ -30,14 +30,14 @@ export const ADDRESS = {
 /** Keywords used across the site (kept tight; Google ignores the tag but
  *  it feeds our own OG/meta and some non-Google engines). */
 export const SITE_KEYWORDS = [
-  "tokenised land",
+  "fractional land",
   "land banking India",
   "fractional land ownership",
   "land investment Noida",
   "Greater Noida real estate",
   "plotted development investment",
   "fractional real estate",
-  "tokenised real estate",
+  "fractional property investment",
   "land bank marketplace",
   "Money Multiply",
 ];
@@ -72,7 +72,7 @@ export function organizationLd(): Record<string, any> {
     logo: abs("/images/logo-mark.png"),
     image: abs(OG_IMAGE),
     description:
-      "A luxury land-banking and tokenised-investment marketplace offering fractional ownership of title-clear land and Grade-A developments across the Greater Noida growth corridor.",
+      "A luxury land-banking and fractional-investment marketplace offering fractional ownership of title-clear land and Grade-A developments across the Greater Noida growth corridor.",
     email: CONTACT.email,
     telephone: CONTACT.phone,
     address: {
@@ -96,7 +96,7 @@ export function websiteLd(): Record<string, any> {
     "@id": SITE_URL + "/#website",
     url: SITE_URL,
     name: SITE_NAME,
-    description: `${SITE_NAME} — ${SITE_TAGLINE}. Tokenised land-banking marketplace.`,
+    description: `${SITE_NAME} — ${SITE_TAGLINE}. Fractional land-banking marketplace.`,
     publisher: { "@id": SITE_URL + "/#organization" },
     inLanguage: "en-IN",
   };
@@ -112,7 +112,7 @@ export function listingLd(l: Listing): Record<string, any> {
     "@id": url + "#product",
     name: l.title,
     category: l.cat,
-    description: l.desc || `${l.title} — a tokenised land-banking opportunity in ${l.loc}.`,
+    description: l.desc || `${l.title} — a fractional land-banking opportunity in ${l.loc}.`,
     image: ogImageFor(l),
     url,
     brand: { "@type": "Brand", name: SITE_NAME },

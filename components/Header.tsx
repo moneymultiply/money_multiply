@@ -85,7 +85,7 @@ export default function Header() {
                 <circle cx="12" cy="12" r="9" />
                 <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" />
               </svg>
-              <span>Global Land &amp; Tokenised Investment Platform · Greater Noida, India</span>
+              <span>Global Land &amp; Fractional Investment Platform · Greater Noida, India</span>
             </div>
             <div className="currGrp" id="currGrp">
               {CURRENCIES.map((c, i) => (

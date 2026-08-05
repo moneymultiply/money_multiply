@@ -27,7 +27,7 @@ const Pin = () => (
   </svg>
 );
 
-const TABS = ["Overview", "Details", "Financials", "Documents", "Tokenomics", "Location"] as const;
+const TABS = ["Overview", "Details", "Financials", "Documents", "Fractions", "Location"] as const;
 type Tab = (typeof TABS)[number];
 
 export default function ProductDetail({ id }: { id: string }) {
@@ -64,7 +64,7 @@ export default function ProductDetail({ id }: { id: string }) {
   const closing = pct >= 90;
 
   const highlights = [
-    "Minimum ticket " + fmtPlain(l.token) + " per token",
+    "Minimum ticket " + fmtPlain(l.token) + " per fraction",
     "Target return " + l.roi,
     l.tenure ? "Tenure / lock-in " + l.tenure : "Flexible holding period",
     l.size || "Title-clear land parcel",
@@ -178,7 +178,7 @@ export default function ProductDetail({ id }: { id: string }) {
                       </svg>
                     </div>
                     <h4>Documented ownership</h4>
-                    <p>Your tokenised allocation maps to clear paperwork at every step.</p>
+                    <p>Your fractional allocation maps to clear paperwork at every step.</p>
                   </div>
                 </div>
               </>
@@ -204,7 +204,7 @@ export default function ProductDetail({ id }: { id: string }) {
                 <table className="pd-fin">
                   <tbody>
                     <tr><td>Total project cost</td><td>{fmt(l.total)}</td></tr>
-                    <tr><td>Token price (min. ticket)</td><td>{fmtPlain(l.token)}</td></tr>
+                    <tr><td>Fraction price (min. ticket)</td><td>{fmtPlain(l.token)}</td></tr>
                     <tr><td>Total units</td><td>{l.units.toLocaleString("en-IN")}</td></tr>
                     <tr><td>Units available</td><td>{avail.toLocaleString("en-IN")}</td></tr>
                     <tr><td>Capital reserved</td><td>{fmt(raised)} ({pct}%)</td></tr>
@@ -251,16 +251,16 @@ export default function ProductDetail({ id }: { id: string }) {
               </>
             )}
 
-            {tab === "Tokenomics" && (
+            {tab === "Fractions" && (
               <>
-                <h3>Tokenomics</h3>
+                <h3>Fractions</h3>
                 <div className="pd-tok-grid">
                   <div className="pd-tok-stat">
-                    <div className="l">Total tokens</div>
+                    <div className="l">Total fractions</div>
                     <div className="v">{l.units.toLocaleString("en-IN")}</div>
                   </div>
                   <div className="pd-tok-stat">
-                    <div className="l">Token price</div>
+                    <div className="l">Fraction price</div>
                     <div className="v">{fmtPlain(l.token)}</div>
                   </div>
                   <div className="pd-tok-stat">
@@ -268,7 +268,7 @@ export default function ProductDetail({ id }: { id: string }) {
                     <div className="v">{fmt(l.units * l.token)}</div>
                   </div>
                   <div className="pd-tok-stat">
-                    <div className="l">Ownership / token</div>
+                    <div className="l">Ownership / fraction</div>
                     <div className="v">{(100 / l.units).toFixed(4)}%</div>
                   </div>
                 </div>
@@ -314,7 +314,7 @@ export default function ProductDetail({ id }: { id: string }) {
 
             <p className="note pd-disclaimer">
               Disclaimer: Figures shown are illustrative financial projections, not guaranteed
-              returns. Tokenised land investments carry market and liquidity risk. Please verify all
+              returns. Fractional land investments carry market and liquidity risk. Please verify all
               legal and market feasibility independently before investing.
             </p>
           </div>

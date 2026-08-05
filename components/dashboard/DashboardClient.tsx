@@ -313,11 +313,11 @@ export default function DashboardClient() {
                 <div className="db-card">
                   <h3 className="db-h3">My reservations</h3>
                   {holdings.length === 0 ? (
-                  <p className="db-muted">No reservations yet. Reserve tokens on any opportunity and our team records your allocation here.</p>
+                  <p className="db-muted">No reservations yet. Reserve fractions on any opportunity and our team records your allocation here.</p>
                 ) : (
                   <table className="pd-fin">
                     <thead>
-                      <tr><td>Project</td><td>Tokens</td><td>Amount</td><td style={{ textAlign: "right" }}>Status</td></tr>
+                      <tr><td>Project</td><td>Fractions</td><td>Amount</td><td style={{ textAlign: "right" }}>Status</td></tr>
                     </thead>
                     <tbody>
                       {holdings.map((h) => (

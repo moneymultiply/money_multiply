@@ -34,7 +34,7 @@ export default function Marketplace() {
           </h2>
           <p>
             Every listing is title-verified and structured for fractional ownership. Reserve your
-            tokens online — a dedicated relationship manager closes the deal with you on WhatsApp.
+            fractions online — a dedicated relationship manager closes the deal with you on WhatsApp.
           </p>
         </div>
         <div className="mkt-bar reveal">
