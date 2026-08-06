@@ -109,13 +109,26 @@ export default function Hero() {
           <div className="hero-copy">
             <span className="eyebrow">Invest · Trade · Grow · Multiply</span>
             <h1>
-              Own a fraction of the
+              Own a fraction of the
               <br />
-              <em>land that builds India.</em>
+              <em>land that builds India.</em>
             </h1>
             <p className="lede">
-              A curated marketplace for title-clear land banks and Grade-A developments across the
-              Greater Noida growth corridor — now investable in fractional sizes from ₹5,00,000.
+              Fractional ownership is revolutionising the global real estate industry — and{" "}
+              <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b> is a major player set to accelerate
+              it in India, opening title-clear land banks and Grade-A developments to everyone,
+              investable in fractional sizes from ₹5,00,000.
+            </p>
+            <p className="hero-coverage">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" />
+                <circle cx="12" cy="10" r="2.5" />
+              </svg>
+              <span>
+                Greater Noida growth corridor &amp; the Himalayan hills and valleys — across Uttarakhand:{" "}
+                <b>Ranikhet, Majkhali, Almora, Kausani range, Mussoorie, Lansdowne</b> and other premium,
+                peaceful locations.
+              </span>
             </p>
             <div className="hero-cta">
               <a className="btn-gold" href="#marketplace">
@@ -125,7 +138,7 @@ export default function Hero() {
                 </svg>
               </a>
               <a className="btn-ghost" href="#how">
-                How fractional land works
+                How fractional ownership works
               </a>
             </div>
             <div className="hero-stats">
