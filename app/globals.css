@@ -137,9 +137,9 @@ header.site{position:fixed;top:0;left:0;right:0;z-index:1000;transition:transfor
 .firefly{position:absolute;width:3px;height:3px;border-radius:50%;background:radial-gradient(circle,#f3e3b0,rgba(198,163,90,0));filter:blur(.3px)}
 .hero .wrap{position:relative;z-index:3;width:100%;padding-top:4vh;padding-bottom:8vh}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}
-.hero h1{font-family:var(--ff-d);font-weight:400;font-size:clamp(38px,6.4vw,80px);line-height:1.04;letter-spacing:-.015em;margin:22px 0 0;text-wrap:balance}
+.hero h1{font-family:var(--ff-d);font-weight:400;font-size:clamp(30px,3.7vw,46px);line-height:1.08;letter-spacing:-.015em;margin:22px 0 0}
 .hero h1 em{font-style:italic;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .lede{font-size:clamp(15px,1.55vw,17.5px);line-height:1.65;color:#d4ddd6;max-width:54ch;margin:24px 0 0;text-wrap:pretty}
+.hero .lede{font-size:clamp(13px,1.25vw,15px);line-height:1.6;color:#d4ddd6;max-width:54ch;margin:22px 0 0;text-wrap:pretty}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
 .hero-stats{display:flex;gap:30px;margin-top:42px;flex-wrap:wrap}
 .hstat .n{font-family:var(--ff-d);font-size:clamp(26px,3.2vw,38px);font-weight:500;background:var(--gold-soft);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}

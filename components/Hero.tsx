@@ -111,7 +111,11 @@ export default function Hero() {
             <h1>
               Fractional ownership is
               <br />
-              <em>revolutionising the global real estate industry.</em>
+              <em>
+                revolutionising the global
+                <br />
+                real estate industry.
+              </em>
             </h1>
             <p className="lede">
               <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b> is a major player set to
