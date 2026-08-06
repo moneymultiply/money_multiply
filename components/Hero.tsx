@@ -109,15 +109,14 @@ export default function Hero() {
           <div className="hero-copy">
             <span className="eyebrow">Invest · Trade · Grow · Multiply</span>
             <h1>
-              Own a fraction of the
+              Fractional ownership is
               <br />
-              <em>land that builds India.</em>
+              <em>revolutionising the global real estate industry.</em>
             </h1>
             <p className="lede">
-              Fractional ownership is revolutionising the global real estate industry — and{" "}
-              <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b> is a major player set to accelerate
-              it in India, opening title-clear land banks and Grade-A developments to everyone,
-              investable in fractional sizes from ₹5,00,000.
+              <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b> is a major player set to
+              accelerate it in India, opening title-clear land banks and Grade-A developments to
+              everyone, investable in fractional sizes from ₹5,00,000.
             </p>
             <p className="hero-coverage">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
