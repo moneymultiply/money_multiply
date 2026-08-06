@@ -146,15 +146,15 @@ export default function Hero() {
             </div>
             <div className="hero-stats">
               <div className="hstat">
-                <div className="n">₹4,200 Cr+</div>
+                <div className="n">₹500 Cr+</div>
                 <div className="l">Assets Mapped</div>
               </div>
               <div className="hstat">
-                <div className="n">11,400+</div>
+                <div className="n">1,600+</div>
                 <div className="l">Investors</div>
               </div>
               <div className="hstat">
-                <div className="n">19.6%</div>
+                <div className="n">24%</div>
                 <div className="l">Avg. Target IRR</div>
               </div>
             </div>

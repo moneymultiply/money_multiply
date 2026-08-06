@@ -16,11 +16,11 @@ export default function StatsBand() {
           </p>
           <div className="hero-stats" style={{ marginTop: "30px" }}>
             <div className="hstat">
-              <Counter className="n" to={4200} prefix="₹" suffix=" Cr+" />
+              <Counter className="n" to={500} prefix="₹" suffix=" Cr+" />
               <div className="l">Asset Value Mapped</div>
             </div>
             <div className="hstat">
-              <Counter className="n" to={11400} suffix="+" />
+              <Counter className="n" to={1600} suffix="+" />
               <div className="l">Investors</div>
             </div>
             <div className="hstat">

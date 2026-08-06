@@ -28,7 +28,7 @@ export default function HowItWorks() {
                 <div className="fc-l">Minimum entry</div>
               </div>
               <div style={{ marginLeft: "auto", textAlign: "right" }}>
-                <div className="fc-n">19.6%</div>
+                <div className="fc-n">24%</div>
                 <div className="fc-l">Avg. target IRR</div>
               </div>
             </div>
