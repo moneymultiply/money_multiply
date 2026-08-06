@@ -126,7 +126,7 @@ export default function Hero() {
               </svg>
               <span>
                 Greater Noida growth corridor &amp; the Himalayan hills and valleys — across Uttarakhand:{" "}
-                <b>Ranikhet, Majkhali, Almora, Kausani range, Mussoorie, Lansdowne</b> and other premium,
+                <b>Ranikhet, Majkhali, Almora, Kausani range, Mussoorie, Lansdowne</b> and other premium and
                 peaceful locations.
               </span>
             </p>
