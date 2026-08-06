@@ -24,7 +24,7 @@ export default function StatsBand() {
               <div className="l">Investors</div>
             </div>
             <div className="hstat">
-              <Counter className="n" to={6} />
+              <Counter className="n" to={8} />
               <div className="l">Live Projects</div>
             </div>
           </div>
