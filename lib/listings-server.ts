@@ -100,6 +100,16 @@ export async function updateListing(id: string, l: Listing): Promise<Listing> {
   return rowToListing(data);
 }
 
+/** Persist a new display order — sets each listing's position to its array index. */
+export async function reorderListings(ids: string[]): Promise<void> {
+  const sb = supabaseAdmin();
+  const results = await Promise.all(
+    ids.map((id, i) => sb.from(TABLE).update({ position: i, updated_at: new Date().toISOString() }).eq("id", id))
+  );
+  const failed = results.find((r) => r.error);
+  if (failed?.error) throw new Error(failed.error.message || JSON.stringify(failed.error));
+}
+
 export async function deleteListing(id: string): Promise<void> {
   const sb = supabaseAdmin();
   const { error } = await sb.from(TABLE).delete().eq("id", id);

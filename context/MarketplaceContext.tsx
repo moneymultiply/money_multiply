@@ -29,6 +29,7 @@ interface MarketplaceCtx {
   getListing: (id: string) => Listing | undefined;
   saveListing: (l: Listing) => Promise<{ ok: boolean; error?: string }>;
   deleteListing: (id: string) => Promise<{ ok: boolean }>;
+  reorderListing: (id: string, dir: -1 | 1) => Promise<{ ok: boolean }>;
   // leads (server-backed)
   leads: Lead[];
   captureLead: (source: LeadSource, contact: string, detail?: string) => void;
@@ -184,6 +185,35 @@ export function MarketplaceProvider({
         return { ok: true };
       }
       return { ok: false };
+    } catch {
+      return { ok: false };
+    }
+  }, []);
+
+  /** Move a listing up/down and persist the new order. */
+  const reorderListing = useCallback(async (id: string, dir: -1 | 1): Promise<{ ok: boolean }> => {
+    // compute the new order optimistically
+    let newOrder: Listing[] | null = null;
+    setListings((prev) => {
+      const idx = prev.findIndex((x) => x.id === id);
+      const to = idx + dir;
+      if (idx < 0 || to < 0 || to >= prev.length) {
+        newOrder = null;
+        return prev;
+      }
+      const next = prev.slice();
+      [next[idx], next[to]] = [next[to], next[idx]];
+      newOrder = next;
+      return next;
+    });
+    if (!newOrder) return { ok: false };
+    try {
+      const res = await fetch("/api/admin/listings/reorder", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids: (newOrder as Listing[]).map((x) => x.id) }),
+      });
+      return { ok: res.ok };
     } catch {
       return { ok: false };
     }
@@ -405,6 +435,7 @@ export function MarketplaceProvider({
       getListing,
       saveListing,
       deleteListing,
+      reorderListing,
       leads,
       captureLead,
       clearLeads,
@@ -441,6 +472,7 @@ export function MarketplaceProvider({
       getListing,
       saveListing,
       deleteListing,
+      reorderListing,
       leads,
       captureLead,
       clearLeads,

@@ -50,7 +50,7 @@ export default function AdminConsole({
   onMinimize: () => void;
   onChangePasscode: () => void;
 }) {
-  const { listings, leads, currency, fmt, fmtPlain, logout, deleteListing, clearLeads, toast } =
+  const { listings, leads, currency, fmt, fmtPlain, logout, deleteListing, reorderListing, clearLeads, toast } =
     useMarketplace();
   const [tab, setTab] = useState<"dash" | "leads" | "list" | "users" | "payments" | "micro">("dash");
   const [editing, setEditing] = useState<Listing | null | undefined>(undefined); // undefined = no form
@@ -182,6 +182,10 @@ export default function AdminConsole({
                   const r = await deleteListing(id);
                   toast(r.ok ? "Listing deleted" : "Couldn’t delete listing");
                 }
+              }}
+              onMove={async (id, dir) => {
+                const r = await reorderListing(id, dir);
+                toast(r.ok ? "Order updated" : "Couldn’t reorder");
               }}
             />
           )}
@@ -483,6 +487,7 @@ function Listings({
   onAdd,
   onEdit,
   onDelete,
+  onMove,
 }: {
   listings: Listing[];
   fmt: (n: number) => string;
@@ -490,12 +495,25 @@ function Listings({
   onAdd: () => void;
   onEdit: (l: Listing) => void;
   onDelete: (id: string) => void;
+  onMove: (id: string, dir: -1 | 1) => void;
 }) {
   return (
     <>
+      <p className="db-muted" style={{ fontSize: "12.5px", margin: "0 0 12px" }}>
+        This is the order shown on the marketplace. Use the arrows to move a listing up or down.
+      </p>
       <div className="admin-list">
-        {listings.map((l) => (
+        {listings.map((l, i) => (
           <div className="adm-item" key={l.id}>
+            <div className="adm-rank">
+              <button className="iconbtn" aria-label="Move up" disabled={i === 0} onClick={() => onMove(l.id, -1)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 15l-6-6-6 6" /></svg>
+              </button>
+              <span className="adm-rank-n">{i + 1}</span>
+              <button className="iconbtn" aria-label="Move down" disabled={i === listings.length - 1} onClick={() => onMove(l.id, 1)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
+              </button>
+            </div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={imgFor(l)} alt="" />
             <div className="ai-info">

@@ -1115,3 +1115,10 @@ header.site .wrap{max-width:1380px}
 .hero-coverage svg{color:var(--sapphire-lt)}
 /* Footer quick-links hover to blue */
 .foot-col a:hover{color:var(--sapphire-lt)}
+
+/* admin listing reorder controls */
+.adm-rank{display:flex;flex-direction:column;align-items:center;gap:2px;margin-right:4px;flex-shrink:0}
+.adm-rank .iconbtn{width:26px;height:26px;padding:0}
+.adm-rank .iconbtn svg{width:15px;height:15px}
+.adm-rank .iconbtn:disabled{opacity:.28;cursor:not-allowed}
+.adm-rank-n{font-family:var(--ff-m);font-size:11px;color:var(--muted);min-width:16px;text-align:center}
