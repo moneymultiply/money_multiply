@@ -224,14 +224,14 @@ export default function SiteFooter() {
                 <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12Z" />
               </svg>
             </a>
-            <a href="#" aria-label="Instagram">
+            <a href="https://www.instagram.com/moneymultiplyglobal" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="3" width="18" height="18" rx="5" />
                 <circle cx="12" cy="12" r="4" />
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
               </svg>
             </a>
-            <a href="#" aria-label="X">
+            <a href="https://x.com/moneymultiply26" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17.5 3h3l-7 8 8.2 10h-6.4l-5-6.1L7.5 21H4.5l7.4-8.5L4 3h6.5l4.5 5.6L17.5 3Zm-1 16h1.7L7.5 4.8H5.7L16.5 19Z" />
               </svg>

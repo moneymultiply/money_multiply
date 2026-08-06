@@ -84,7 +84,10 @@ export function organizationLd(): Record<string, any> {
       addressCountry: ADDRESS.country,
     },
     areaServed: "IN",
-    sameAs: [] as string[],
+    sameAs: [
+      "https://www.instagram.com/moneymultiplyglobal",
+      "https://x.com/moneymultiply26",
+    ],
   };
 }
 
