@@ -87,6 +87,7 @@ export function organizationLd(): Record<string, any> {
     sameAs: [
       "https://www.instagram.com/moneymultiplyglobal",
       "https://x.com/moneymultiply26",
+      "https://www.facebook.com/share/1DhC9vUsG2/",
     ],
   };
 }
