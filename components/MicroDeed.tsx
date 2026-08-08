@@ -1,6 +1,9 @@
-/* Confidential Micro Co-Investment & Pooled Land-Banking Agreement — auto-generated
-   per micro-pool contribution, personalised with the investor's name, email and the
-   exact contributed amount. Mirrors the Master Deed layout (.ag-* classes). */
+/* Micro Pool Funding Agreement — Himalayan Hills.
+   Content transcribed from the official Money Multiply Micro Pool Funding Agreement,
+   auto-generated per micro-pool contribution and personalised with the investor's
+   name, email and exact contributed amount. Uses the shared .ag-* deed styling. */
+
+import { COMPANY_BANK } from "@/lib/data";
 
 const Fill = ({ w = 160 }: { w?: number }) => (
   <span className="ag-fill" style={{ minWidth: w }} />
@@ -29,6 +32,10 @@ function inWords(n: number): string {
   return parts.join(" ").trim();
 }
 
+// Project financial baseline (per the official agreement).
+const PLOT_COST = 2000000; // ₹20,00,000 — 100 sq yd master plot
+const RATE_PER_SQYD = 20000; // ₹20,000 / sq yd
+
 export default function MicroDeed({
   name,
   email,
@@ -45,183 +52,178 @@ export default function MicroDeed({
   const amt = Math.max(0, Math.round(amount || 0));
   const words = inWords(amt);
 
-  // Target return playbook — up to 15% / 16% / 17% base distributions over a 36-month
-  // pooled horizon, principal returned at maturity (≈ 1.48× target aggregate).
-  const y1 = Math.round(amt * 0.15);
-  const y2 = Math.round(amt * 0.16);
-  const y3 = Math.round(amt * 0.17);
-  const maturity = amt + y1 + y2 + y3;
+  // Investor-specific derived figures.
+  const fracPct = amt / PLOT_COST * 100;               // proportional fractional interest
+  const sqYd = amt / RATE_PER_SQYD;                     // equivalent land area
+  const ret2 = Math.round(amt * 1.5);                  // 2-yr: up to 50%
+  const ret4 = Math.round(amt * 2.0);                  // 4-yr: up to 100% (doubling)
+  const fmtNum = (n: number) => n.toLocaleString("en-IN", { maximumFractionDigits: 2 });
 
   return (
-    <div className="ag-doc">
-      {/* letterhead */}
-      <div className="ag-head">
-        <div>
-          <div className="ag-brand">MONEY MULTIPLY</div>
-          <div className="ag-brand-sub">THE LAND BANKERS AND TRADERS</div>
-          <div className="ag-brand-tag">Invest • Trade • Grow • Multiply</div>
-        </div>
-        <div className="ag-legal">
-          <b>Money Multiply Trading &amp; Consultant Pvt. Ltd.</b>
-          <span>B-128, First Floor, Sector-2 Noida,</span>
-          <span>Gautam Buddha Nagar, Uttar Pradesh – 201301</span>
-          <span>CIN: U70200UP2026PTC253626</span>
-          <span>Web: moneymultiplyglobal.com | Email: info@moneymultiplyglobal.com</span>
-        </div>
+    <div className="ag-doc md-doc">
+      {/* cover — matches the official Micro Pool Funding Agreement PDF */}
+      <div className="md-kicker">OFFICIAL LEGAL &amp; FINANCIAL DOCUMENT</div>
+      <h1 className="md-title">MICRO POOL FUNDING AGREEMENT</h1>
+      <div className="md-project">Project: Himalayan Hills</div>
+
+      <div className="md-issued">
+        <div className="md-issued-label">Issued By:</div>
+        <div className="md-issued-name">Money Multiply Trading &amp; Consultant Private Limited</div>
+        <div className="md-issued-tag">The Land Banker and Traders</div>
+        <div className="md-issued-div" />
+        <div className="md-issued-row"><b>CIN:</b> U70200UP2026PTC253626 &nbsp;|&nbsp; <b>GSTIN:</b> 09AAVCM0034C1ZL</div>
+        <div className="md-issued-row"><b>Registered Office:</b> B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301</div>
+        <div className="md-issued-row"><b>Web:</b> moneymultiplyglobal.com &nbsp;|&nbsp; <b>Email:</b> info@moneymultiplyglobal.com</div>
       </div>
-      <div className="ag-rule" />
+      <div className="md-ref">Ref No: {refNo}</div>
 
-      <h1 className="ag-title">CONFIDENTIAL MICRO CO-INVESTMENT &amp; POOLED LAND-BANKING AGREEMENT</h1>
-      <div className="ag-ref">Ref No: {refNo}</div>
-
-      <div className="ag-callout" style={{ textAlign: "center" }}>
-        <b>Allocation Vehicle:</b> Money Multiply Micro Funding Pool
-        <div style={{ fontSize: "11.5px", color: "#4b5563", marginTop: "4px" }}>
-          Diversified, title-clear land-bank allocation · Small-ticket band ₹10,000 – ₹5,00,000
-        </div>
+      <div className="ag-callout md-summary">
+        <b>Document Summary:</b> This formal agreement outlines the legal framework, terms, conditions,
+        financial structures, expected returns, and governance rules for fractional land acquisition and
+        micro pool funding under the Himalayan Hills project, in respect of the Investor&apos;s contribution
+        of <b>{inr(amt)}</b>{words ? ` (Rupees ${words} Only)` : ""}.
       </div>
 
       {/* key facts */}
       <table className="ag-kv">
         <tbody>
           <tr><td>First Party (Company)</td><td>Money Multiply Trading &amp; Consultant Private Limited (CIN: U70200UP2026PTC253626)</td></tr>
-          <tr><td>Registered Corporate Base</td><td>B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301</td></tr>
-          <tr><td>Second Party (Co-Investor)</td><td><b>{investor}</b>{email ? ` · ${email}` : ""}</td></tr>
+          <tr><td>Registered Office</td><td>B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301</td></tr>
+          <tr><td>Second Party (Investor)</td><td><b>{investor}</b>{email ? ` · ${email}` : ""}</td></tr>
           <tr><td>Contribution Amount</td><td><b>{inr(amt)}/-</b>{words ? ` (Rupees ${words} Only)` : ""}</td></tr>
-          <tr><td>Allocation Vehicle</td><td>Micro Funding Pool — pooled, diversified land-bank block</td></tr>
-          <tr><td>Target Maturity Horizon</td><td>36 Calendar Months (Fixed Pooled Lifecycle)</td></tr>
-          <tr><td>Governing Framework</td><td>Indian Arbitration &amp; Conciliation Act, 1996 &amp; Companies Act, 2013</td></tr>
+          <tr><td>Proportional Fractional Interest</td><td>{fmtNum(fracPct)}% of the master plot (≈ {fmtNum(sqYd)} sq. yd.)</td></tr>
+          <tr><td>Project</td><td>Himalayan Hills</td></tr>
         </tbody>
       </table>
 
-      <p className="ag-note-box">
-        THIS DOCUMENT FORMS AN ENFORCEABLE CONTRACT UNDER INDIAN LAW FOR THE SPECIFIC CONTRIBUTION
-        OF {inr(amt)} STATED ABOVE. STAMP DUTY TO BE ADJUDICATED ELECTRONICALLY OR MANUALLY AT THE
-        TIME OF EXECUTION.
-      </p>
-
-      <h2 className="ag-h2">Micro Co-Investment &amp; Pooled Allocation Agreement</h2>
+      <h2 className="ag-h2">1. Parties to the Agreement &amp; Recitals</h2>
       <p>
-        THIS CONFIDENTIAL MICRO CO-INVESTMENT AND POOLED LAND-BANKING AGREEMENT (the
-        &quot;Agreement&quot;) is executed and made legally operational on this <Fill w={60} /> day of{" "}
-        <Fill w={120} />, 2026 (the &quot;Execution Date&quot;), by and between:
+        This Micro Pool Funding Agreement (hereinafter referred to as the &quot;Agreement&quot;) is entered
+        into on this <Fill w={50} /> day of <Fill w={110} />, 2026 by and between:
       </p>
       <p>
-        <b>MONEY MULTIPLY TRADING &amp; CONSULTANT PRIVATE LIMITED</b>, a company incorporated under the
-        Companies Act, 2013, holding CIN <b>U70200UP2026PTC253626</b>, having its registered office at
-        B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301 (the
-        &quot;Company&quot; or &quot;First Party&quot;);
+        <b>FIRST PARTY (The Company):</b> Money Multiply Trading &amp; Consultant Private Limited, a company
+        incorporated under the Companies Act, 2013 (CIN: U70200UP2026PTC253626), having its registered
+        office at B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301
+        (hereinafter referred to as the &quot;Company&quot;, which expression shall unless repugnant to the
+        context include its successors and permitted assigns) of the First Part;
       </p>
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
-        <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing
-        permanently at <Fill w={230} />, bearing Permanent Account Number (PAN): <Fill w={130} /> and
-        Aadhaar Number: <Fill w={140} /> (the &quot;Co-Investor&quot; or &quot;Second Party&quot;).
+        <b>SECOND PARTY (The Investor):</b> <b>{investor}</b>{email ? ` (${email})` : ""}, whose details are
+        registered in the official unit allotment registry, contributing <b>{inr(amt)}</b> towards the micro
+        pool (hereinafter referred to as the &quot;Investor&quot;) of the Second Part.
       </p>
+
+      <h2 className="ag-h2">2. Purpose &amp; Project Background</h2>
       <p>
-        The Company and the Co-Investor shall collectively be the &quot;Parties&quot; and individually a
-        &quot;Party&quot;.
+        The Company is engaged in land banking, real estate consultancy, and asset management under the brand
+        name &quot;The Land Banker and Traders&quot;. The Company has initiated a premier real estate project
+        titled &quot;Himalayan Hills&quot;. Recognizing that standard land parcels require significant capital
+        outlay, the Company has structured a <b>Micro Pool Funding Mechanism</b> to enable retail investors with
+        modest capital to participate in high-value land acquisitions.
       </p>
 
-      <h2 className="ag-h2">Recitals &amp; Contextual Background</h2>
-      <ul className="ag-list">
-        <li>The Company operates across land-bank procurement, spatial landscape engineering, civil layout zoning and fractional commercial real estate across the Greater Noida and Uttarakhand growth corridors.</li>
-        <li>The Company operates the <b>Micro Funding Pool</b> — a dedicated small-ticket vehicle that aggregates individual contributions in the ₹10,000 to ₹5,00,000 band into a single, professionally managed, diversified land-bank allocation.</li>
-        <li>The Co-Investor has elected to deploy a principal contribution of <b>{inr(amt)}</b>{words ? ` (Rupees ${words} Only)` : ""} into the Micro Funding Pool under a structured, asset-secured arrangement, which the Company has agreed to accept on the terms set out herein.</li>
-        <li>Each contribution is proportionately allocated across the pooled land-bank so that even a small-ticket Co-Investor participates in institution-grade, title-clear assets.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 1 — Definitions</h2>
-      <ul className="ag-list">
-        <li><b>&quot;Pool&quot; / &quot;Micro Funding Pool&quot;</b> — the diversified land-bank allocation vehicle into which small-ticket contributions between ₹10,000 and ₹5,00,000 are aggregated and deployed.</li>
-        <li><b>&quot;Principal Contribution&quot;</b> — the sum of <b>{inr(amt)}</b> transferred by the Second Party to the Company&apos;s designated banking channels under this Agreement.</li>
-        <li><b>&quot;Allocation Share&quot;</b> — the Co-Investor&apos;s proportionate economic interest in the Pool, equal to the Principal Contribution divided by the aggregate corpus of the Pool at the time of activation.</li>
-        <li><b>&quot;Maturity Framework&quot;</b> — the execution and profit-realisation phase lasting exactly 36 calendar months from capital activation.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 2 — Pool Mechanics &amp; Allocation</h2>
-      <ul className="ag-list">
-        <li><b>2.1 Aggregation:</b> The Principal Contribution is pooled with contributions from other Co-Investors and deployed as a single block into title-clear, professionally selected land-bank parcels.</li>
-        <li><b>2.2 Diversification:</b> The Pool spreads capital across multiple parcels and phases, so no single Co-Investor bears the concentration risk of an individual plot.</li>
-        <li><b>2.3 Proportionate Interest:</b> The Co-Investor&apos;s Allocation Share, and every distribution under Article 3, is computed strictly on the {inr(amt)} Principal Contribution recorded against this Ref No.</li>
-        <li><b>2.4 Ledger Activation:</b> The Company acknowledges ledger activation of the Principal Contribution upon realisation of funds and issues this Agreement as the record of the Co-Investor&apos;s participation.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 3 — Capital Covenants &amp; Return Playbook</h2>
-      <p>
-        <b>3.1 Principal Deployment:</b> The Co-Investor transfers <b>{inr(amt)}</b> into the Micro Funding Pool; the Company acknowledges ledger activation of this contribution.
-      </p>
-      <p>
-        <b>3.2 Target Return:</b> Over the 36-month horizon the Pool targets base distributions of up to 15%, 16% and 17% of the Principal Contribution respectively, with the principal returned at maturity — a target aggregate of <b>{inr(maturity)}</b> for this contribution (inclusive of principal and performance-linked profit).
-      </p>
+      <h2 className="ag-h2">3. Core Financial Structure &amp; Parameters</h2>
+      <p>The financial baseline of the Himalayan Hills micro pool funding structure is defined as follows:</p>
       <table className="ag-table">
         <thead>
-          <tr><th>Operating Target Phase</th><th>Annual Return Vector</th><th>Pool Execution Milestones</th><th>Cumulative Ledger Clearance</th></tr>
+          <tr><th>Parameter Description</th><th>Agreed Metric / Value</th></tr>
         </thead>
         <tbody>
-          <tr><td>End of Year 1</td><td>Up to 15% base distribution</td><td>Parcel identification, title conversion, zoning approvals and perimeter tracking across the pooled land-bank.</td><td>{inr(y1)} gross disbursed profits</td></tr>
-          <tr><td>End of Year 2</td><td>Up to 16% base distribution</td><td>Layout engineering, plotting, civic infrastructure and phased value uplift across parcels.</td><td>{inr(y1 + y2)} cumulative</td></tr>
-          <tr><td>End of Year 3 (Maturity)</td><td>Up to 17% final distribution</td><td>Parcel disposals / fractional activation, pooled settlement and final maturity clearance.</td><td>{inr(y1 + y2 + y3)} cumulative distributions</td></tr>
+          <tr><td>Standard Land Unit (Master Plot)</td><td>100 Square Yards (Sq. Yd.)</td></tr>
+          <tr><td>Land Acquisition Rate</td><td>₹20,000 per Square Yard</td></tr>
+          <tr><td>Total Standard Plot Cost</td><td>₹20,00,000 (Twenty Lakh Rupees)</td></tr>
+          <tr><td>Micro Pool Investment Range</td><td>Minimum ₹10,000 to Maximum ₹5,00,000 per Investor</td></tr>
+          <tr><td><b>This Investor&apos;s Contribution</b></td><td><b>{inr(amt)}</b>{words ? ` (Rupees ${words} Only)` : ""}</td></tr>
+          <tr><td><b>Proportional Fractional Interest</b></td><td><b>{fmtNum(fracPct)}%</b> of the master plot (≈ {fmtNum(sqYd)} sq. yd.)</td></tr>
         </tbody>
       </table>
+
+      <h2 className="ag-h2">4. Fractional Ownership &amp; Micro Pool Mechanics</h2>
+      <p><b>4.1 Pooling Mechanism.</b> Since the acquisition of an independent standard land unit of 100 square
+        yards valued at ₹20,00,000 is capital-intensive, the Company aggregates capital contributions ranging
+        from ₹10,000 to ₹5,00,000 from multiple investors to form a collective &quot;Micro Pool&quot;.</p>
+      <p><b>4.2 Proportional Fractional Interest.</b> Each Investor shall receive an undivided fractional share
+        or proportional interest in the master land parcel corresponding strictly to the ratio of their capital
+        contribution versus the total plot cost. For this Investor, the contribution of {inr(amt)} represents an
+        undivided fractional interest of <b>{fmtNum(fracPct)}%</b> in the master plot.</p>
+      <p><b>4.3 Land Title Security &amp; Documentation.</b> The master title of the land parcel shall be
+        registered legally in the name of the Company or its designated corporate trustee. Every Investor shall
+        be issued an official <b>Unit Allotment Letter</b> and a <b>Shareholding Certificate</b>, confirming
+        their respective fractional ownership.</p>
+
+      <h2 className="ag-h2">5. Projected Returns, Tenures &amp; Exit Policy</h2>
+      <p><b>5.1 Expected Profit Projections.</b> Based on historical real estate appreciation models and regional
+        development forecasts for the Himalayan Hills project, the expected financial returns are structured as
+        follows:</p>
+      <ul className="ag-list">
+        <li><b>2-Year Milestone:</b> Expected cumulative return of up to <b>50%</b> on the initial contributed
+          capital — approximately <b>{inr(ret2)}</b> on this contribution.</li>
+        <li><b>4-Year Milestone:</b> Expected cumulative return of up to <b>100%</b> (doubling of principal value)
+          upon maturity and strategic land commercialization — approximately <b>{inr(ret4)}</b> on this
+          contribution.</li>
+      </ul>
+      <p><b>5.2 Minimum Fund Exit &amp; Liquidation.</b> Investors maintain the right to seek a liquidity exit
+        after a mandatory minimum lock-in period of <b>1 Year</b> from the date of fund allotment, subject to
+        company buyback policies or prevailing market liquidation rates.</p>
+
+      <h2 className="ag-h2">6. Company Commitments &amp; Transparency</h2>
       <p>
-        <b>3.3 Maturity Settlement:</b> At the 36th month, the Company returns the <b>{inr(amt)}</b> deployed principal alongside final pooled balances — a target aggregate of <b>{inr(maturity)}</b> for this contribution. All return figures are targets, not guarantees, and are subject to the diversified performance of the Pool.
+        The Company undertakes to maintain absolute transparency throughout the lifecycle of the Himalayan Hills
+        project. This includes providing periodic progress audits, land development updates, and asset valuation
+        reports to all registered micro pool investors.
       </p>
 
-      <h2 className="ag-h2">Article 4 — Terms, Conditions &amp; Legal Disclosures</h2>
-      <ul className="ag-list">
-        <li><b>4.1 Capital Ring-Fencing:</b> Every rupee of the {inr(amt)} is locked exclusively into land acquisition, layout development and allied costs of the pooled land-bank; the Company may not use it to settle unrelated debts.</li>
-        <li><b>4.2 Asset-Backed Security:</b> Pool contributions are secured against the title-clear land parcels acquired by the Pool, forming an asset cushion behind the Co-Investor&apos;s Allocation Share.</li>
-        <li><b>4.3 Statutory Compliance:</b> Deployment complies with applicable state land-ownership laws, environmental and municipal zoning norms and MCA rules.</li>
-        <li><b>4.4 TDS:</b> All distributions and maturity balances are subject to Indian income tax; the Company deducts TDS at mandated rates and issues Form 16A.</li>
-        <li><b>4.5 Lock-In:</b> A 36-month lock-in applies to this contribution. No right to early liquidation, save under extreme circumstances with board approval and an early-exit discount of up to 10% of the Principal Contribution.</li>
-        <li><b>4.6 No Guarantee:</b> Return vectors in Article 3 are performance targets driven by the diversified Pool and do not constitute a guaranteed or assured return.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 5 — Restrictions &amp; Indemnification</h2>
-      <ul className="ag-list">
-        <li><b>5.1 Passive Status:</b> This is a passive profit-sharing collaboration; the Co-Investor holds no voting authority or operational voice in the Pool or its parcels.</li>
-        <li><b>5.2 Title Indemnification:</b> The Company indemnifies the Co-Investor against losses from title discrepancies, ownership disputes or administrative non-compliance on pooled parcels.</li>
-        <li><b>5.3 Force Majeure:</b> Neither Party is liable for delays from acts of God, seismic events, statutory shifts or similar; the 36-month schedule extends by the disruption period.</li>
-        <li><b>5.4 Confidentiality:</b> The Co-Investor maintains confidentiality over pool plans, financials and strategies; leakage is a material breach.</li>
-        <li><b>5.5 Severability:</b> Invalidity of any clause remains localised and does not affect the remaining Agreement.</li>
-        <li><b>5.6 Entire Agreement:</b> This Agreement overrides all prior verbal understandings, emails, messages or brochures in respect of this contribution.</li>
-        <li><b>5.7 Governing Law &amp; Arbitration:</b> Governed by the laws of India; disputes go to conciliation, then sole-arbitrator arbitration under the Arbitration &amp; Conciliation Act, 1996. Seat/venue: Noida, Gautam Buddha Nagar, Uttar Pradesh; language English; local courts retain exclusive jurisdiction.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 6 — Termination &amp; Exit</h2>
-      <ul className="ag-list">
-        <li><b>6.1 Natural Expiry:</b> The Agreement concludes once the maturity settlement and the {inr(amt)} principal are transferred to the Co-Investor.</li>
-        <li><b>6.2 Material Default:</b> On material breach, the non-defaulting Party issues a written cure notice; the defaulting Party has 45 days to remedy, failing which arbitration may be initiated.</li>
-      </ul>
-
-      <h2 className="ag-h2">Article 7 — Execution &amp; Signatures</h2>
+      <h2 className="ag-h2">7. Remittance &amp; Company Bank Details</h2>
       <p>
-        IN WITNESS WHEREOF, the Parties have set their signatures and seals onto this Agreement on the day
-        and year first written above at Noida, Gautam Buddha Nagar, Uttar Pradesh, in the presence of the
-        undermentioned witnesses.
+        The Investor shall remit the contribution of <b>{inr(amt)}</b> to the Company&apos;s designated banking
+        channel below, and upload the payment proof through the Investor portal for acknowledgement:
+      </p>
+      <table className="ag-kv">
+        <tbody>
+          <tr><td>Beneficiary Name</td><td>{COMPANY_BANK.beneficiary}</td></tr>
+          <tr><td>Bank</td><td>{COMPANY_BANK.bank}</td></tr>
+          <tr><td>Account Number</td><td>{COMPANY_BANK.account}</td></tr>
+          <tr><td>IFSC Code</td><td>{COMPANY_BANK.ifsc}</td></tr>
+          <tr><td>Account Type</td><td>{COMPANY_BANK.type}</td></tr>
+          <tr><td>Branch</td><td>{COMPANY_BANK.branch}</td></tr>
+          <tr><td>UPI ID</td><td>{COMPANY_BANK.upiVpa}</td></tr>
+        </tbody>
+      </table>
+
+      <h2 className="ag-h2">8. Investor Declarations &amp; Legal Acknowledgments</h2>
+      <ul className="ag-list">
+        <li>The Investor confirms that funds invested are from legitimate sources and that they enter into this Agreement voluntarily without duress or undue influence.</li>
+        <li>The Investor acknowledges that real estate and land banking involve inherent market fluctuations, and projected returns (50% in 2 years / 100% in 4 years) are target estimations based on commercial appreciation models and are not guaranteed.</li>
+        <li>Both parties agree that this document constitutes the entire understanding regarding the Himalayan Hills micro pool funding arrangement in respect of this contribution.</li>
+      </ul>
+
+      <p style={{ marginTop: "14px" }}>
+        IN WITNESS WHEREOF, the parties hereto have executed this Micro Pool Funding Agreement through their
+        authorized representatives on the date first written above.
       </p>
       <div className="ag-sign">
         <div className="ag-sign-col">
           <div className="ag-sign-line" />
-          <b>Micro Co-Investor</b>
-          <span className="ag-muted">{investor}</span>
-          {email && <span className="ag-muted">{email}</span>}
-          <span className="ag-muted">Contribution: {inr(amt)}</span>
-          <span className="ag-muted">PAN: <Fill w={110} /></span>
-          <span className="ag-muted">Date: <Fill w={70} /> · Place: <Fill w={90} /></span>
+          <b>For Money Multiply Trading &amp; Consultant Pvt. Ltd.</b>
+          <span className="ag-muted">(First Party / Company)</span>
+          <span className="ag-muted">Authorized Signatory</span>
+          <span className="ag-muted">Corporate Seal / Stamp</span>
         </div>
         <div className="ag-sign-col">
           <div className="ag-sign-line" />
-          <b>Director / Authorized Signatory</b>
-          <span className="ag-muted">For Money Multiply Trading &amp; Consultant Pvt. Ltd.</span>
-          <span className="ag-muted">Corporate Seal / Stamp</span>
-          <span className="ag-muted">Date: <Fill w={70} /> · Place: Noida, U.P.</span>
+          <b>Investor Signature</b>
+          <span className="ag-muted">(Second Party / Investor)</span>
+          <span className="ag-muted">Name: {investor}</span>
+          {email && <span className="ag-muted">{email}</span>}
+          <span className="ag-muted">Contribution: {inr(amt)}</span>
+          <span className="ag-muted">PAN / ID: <Fill w={120} /></span>
         </div>
       </div>
 
       <div className="ag-foot">
-        Money Multiply Trading &amp; Consultant Pvt. Ltd. • Confidential Micro Co-Investment Agreement • Generated for {investor} · {inr(amt)}. Subject to execution, stamping and KYC verification.
+        Money Multiply Trading &amp; Consultant Pvt. Ltd. • Himalayan Hills Project • Micro Pool Funding Agreement • Generated for {investor} · {inr(amt)}. Subject to execution, stamping and KYC verification.
       </div>
     </div>
   );
