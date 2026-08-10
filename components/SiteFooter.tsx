@@ -214,7 +214,7 @@ export default function SiteFooter() {
             B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, UP 201301
           </a>
           <div className="foot-soc">
-            <a href="#" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/money-multiply-global/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0ZM.5 8h4V24h-4V8Zm7 0h3.8v2.2h.1c.5-1 1.8-2.2 3.9-2.2 4.2 0 5 2.7 5 6.3V24h-4v-7.1c0-1.7 0-3.9-2.4-3.9s-2.7 1.8-2.7 3.7V24h-4V8Z" />
               </svg>

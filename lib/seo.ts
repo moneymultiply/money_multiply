@@ -88,6 +88,7 @@ export function organizationLd(): Record<string, any> {
       "https://www.instagram.com/moneymultiplyglobal",
       "https://x.com/moneymultiply26",
       "https://www.facebook.com/share/1DhC9vUsG2/",
+      "https://www.linkedin.com/company/money-multiply-global/",
     ],
   };
 }
