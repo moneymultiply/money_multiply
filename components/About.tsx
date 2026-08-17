@@ -13,6 +13,15 @@ const LEAD_TAGS = [
   "Strategic Planning",
 ];
 
+const PRAKASH_TAGS = [
+  "Corporate Governance",
+  "Civil Project Supervision",
+  "Workforce Leadership",
+  "Sales & Marketing",
+  "Project Execution",
+  "Business Development",
+];
+
 const TIMELINE = [
   { ty: "Real Estate", h: "Property & land advisory", p: "Consulting, land acquisition, project marketing and investment planning across the NCR region." },
   { ty: "Digital Assets", h: "Global crypto markets", p: "Trading, market analysis and portfolio management in international cryptocurrency markets." },
@@ -122,6 +131,34 @@ export default function About() {
             </p>
             <div className="lead-tags">
               {LEAD_TAGS.map((t) => (
+                <span className="lead-tag" key={t}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="lead-card reveal scale" style={{ marginTop: "24px" }}>
+          <div className="lead-avatar">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/Prakash_Mishra.jpeg" alt="Prakash Kumar Mishra" />
+          </div>
+          <div className="lead-info">
+            <h3>Prakash Kumar Mishra</h3>
+            <div className="role">Co-Founder &amp; Director · Corporate Governance &amp; Project Execution</div>
+            <p>
+              A Director on the Board of Money Multiply Trading &amp; Consultant Pvt. Ltd., pairing
+              high-level corporate governance and financial oversight with hands-on execution across
+              civil supervision, architecture coordination, and strategic marketing.
+            </p>
+            <p style={{ marginTop: "12px" }}>
+              He drives business development and revenue strategy while directing on-ground project
+              operations — coordinating civil engineers, architects, and labour teams to deliver
+              seamless, on-time execution across the company&apos;s developments.
+            </p>
+            <div className="lead-tags">
+              {PRAKASH_TAGS.map((t) => (
                 <span className="lead-tag" key={t}>
                   {t}
                 </span>
