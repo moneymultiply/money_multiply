@@ -146,7 +146,7 @@ export default function About() {
           </div>
           <div className="lead-info">
             <h3>Prakash Kumar Mishra</h3>
-            <div className="role">Co-Founder &amp; Director · Corporate Governance &amp; Project Execution</div>
+            <div className="role">Director &amp; Corporate Contractor</div>
             <p>
               A Director on the Board of Money Multiply Trading &amp; Consultant Pvt. Ltd., pairing
               high-level corporate governance and financial oversight with hands-on execution across
