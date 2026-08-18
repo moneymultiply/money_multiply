@@ -21,6 +21,10 @@ export default function AdminUsers() {
   const [newPass, setNewPass] = useState("");
   const [headCode, setHeadCode] = useState("");
   const [filter, setFilter] = useState<"all" | "partner" | "investor" | "hq">("all");
+  const [adding, setAdding] = useState(false);
+  const [savingNew, setSavingNew] = useState(false);
+  const emptyNew = { role: "investor", name: "", email: "", phone: "", password: "" };
+  const [nu, setNu] = useState(emptyNew);
 
   const loadUsers = () => {
     setLoading(true);
@@ -39,6 +43,36 @@ export default function AdminUsers() {
   }, []);
 
   const viaHq = (u: AppUser) => !!headCode && u.referredBy === headCode;
+
+  const createNew = async () => {
+    if (savingNew) return;
+    if (!nu.name.trim()) return toast("Enter a name");
+    if (!/^\S+@\S+\.\S+$/.test(nu.email.trim())) return toast("Enter a valid email");
+    if (nu.password.length < 6) return toast("Password must be at least 6 characters");
+    setSavingNew(true);
+    try {
+      const r = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(nu),
+      });
+      const d = await r.json().catch(() => ({}));
+      setSavingNew(false);
+      if (r.ok && d.ok) {
+        setUsers((prev) => [d.user, ...prev]);
+        setNu(emptyNew);
+        setAdding(false);
+        toast(`${d.user.role === "partner" ? "Partner" : "Investor"} added — share the login details`);
+      } else if (d.error === "email_taken") {
+        toast("That email is already registered");
+      } else {
+        toast("Couldn’t add user");
+      }
+    } catch {
+      setSavingNew(false);
+      toast("Network error");
+    }
+  };
 
   const openDetail = async (id: string) => {
     const r = await fetch(`/api/admin/users/${id}`);
@@ -107,6 +141,36 @@ export default function AdminUsers() {
     } else toast("Couldn’t set password");
   };
 
+  const toggleActive = async () => {
+    if (!detail) return;
+    const next = detail.user.status === "suspended" ? "active" : "suspended";
+    const r = await fetch(`/api/admin/users/${detail.user.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: next }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (d?.ok) {
+      setStatus(next);
+      setDetail((p) => (p ? { ...p, user: d.user } : p));
+      setUsers((prev) => prev.map((u) => (u.id === d.user.id ? d.user : u)));
+      toast(next === "suspended" ? "Account deactivated — login blocked" : "Account reactivated");
+    } else toast("Couldn’t update");
+  };
+
+  const removeUser = async () => {
+    if (!detail) return;
+    const who = detail.user.name || detail.user.email;
+    if (!confirm(`Delete ${who}? This permanently removes the account and their reservations. This cannot be undone.`)) return;
+    const r = await fetch(`/api/admin/users/${detail.user.id}`, { method: "DELETE" });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
+      setUsers((prev) => prev.filter((u) => u.id !== detail.user.id));
+      toast("User deleted");
+      setDetail(null);
+    } else toast("Couldn’t delete user");
+  };
+
   /* ---- detail view ---- */
   if (detail) {
     const u = detail.user;
@@ -146,7 +210,18 @@ export default function AdminUsers() {
               </div>
             )}
           </div>
-          <button className="btn-mini" onClick={saveUser}>Save changes</button>
+          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
+            <button className="btn-mini" onClick={saveUser}>Save changes</button>
+            <button className="btn-mini" onClick={toggleActive}>
+              {u.status === "suspended" ? "Reactivate account" : "Deactivate account"}
+            </button>
+            <button className="btn-mini danger" onClick={removeUser}>Delete user</button>
+          </div>
+          {u.status === "suspended" && (
+            <p className="db-muted" style={{ fontSize: "12px", marginTop: "8px", color: "#e08a7e" }}>
+              This account is deactivated — the user cannot log in until reactivated.
+            </p>
+          )}
 
           <h4 className="pd-sub">
             Password{" "}
@@ -226,13 +301,57 @@ export default function AdminUsers() {
   }
 
   /* ---- list view ---- */
+  const setN = (k: keyof typeof nu) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setNu((p) => ({ ...p, [k]: e.target.value }));
+
+  const addBlock = (
+    <div style={{ marginBottom: "16px" }}>
+      {!adding ? (
+        <button className="btn-mini" onClick={() => setAdding(true)}>
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: "6px" }}>
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Add user / partner
+        </button>
+      ) : (
+        <div className="au-detail">
+          <div className="leads-head" style={{ marginBottom: "12px" }}>
+            <div className="lh-title">Add a new user</div>
+          </div>
+          <div className="frow">
+            <div className="field">
+              <label>Role</label>
+              <select value={nu.role} onChange={setN("role")}>
+                <option value="investor">Investor</option>
+                <option value="partner">Partner</option>
+              </select>
+            </div>
+            <div className="field"><label>Full name</label><input value={nu.name} onChange={setN("name")} placeholder="e.g. Rahul Sharma" /></div>
+          </div>
+          <div className="frow">
+            <div className="field"><label>Email</label><input type="email" value={nu.email} onChange={setN("email")} placeholder="name@email.com" /></div>
+            <div className="field"><label>Phone</label><input value={nu.phone} onChange={setN("phone")} placeholder="+91…" /></div>
+          </div>
+          <div className="field"><label>Temporary password</label><input type="text" value={nu.password} onChange={setN("password")} placeholder="Min 6 characters — share with the user" /></div>
+          <div style={{ display: "flex", gap: "10px", marginTop: "4px" }}>
+            <button className={"btn-gold" + (savingNew ? " loading" : "")} onClick={createNew} disabled={savingNew} style={{ padding: "10px 22px" }}>Create user</button>
+            <button className="btn-ghost" onClick={() => { setAdding(false); setNu(emptyNew); }} style={{ padding: "10px 18px" }}>Cancel</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   if (loading) return <p className="db-muted">Loading users…</p>;
   if (users.length === 0)
     return (
-      <div className="lead-empty">
-        <b>No users yet</b>
-        <p>Partner & investor registrations from “Become an Associate” will appear here.</p>
-      </div>
+      <>
+        {addBlock}
+        <div className="lead-empty">
+          <b>No users yet</b>
+          <p>Add one above, or partner &amp; investor registrations from “Become an Associate” will appear here.</p>
+        </div>
+      </>
     );
 
   const counts = {
@@ -247,6 +366,7 @@ export default function AdminUsers() {
 
   return (
     <>
+      {addBlock}
       <div className="lead-filter">
         <button className={filter === "all" ? "on" : ""} onClick={() => setFilter("all")}>All ({counts.all})</button>
         <button className={filter === "partner" ? "on" : ""} onClick={() => setFilter("partner")}>Partners ({counts.partner})</button>

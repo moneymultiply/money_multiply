@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
   try {
     const user = await authenticate(email, password);
     if (!user) return NextResponse.json({ ok: false, error: "invalid" }, { status: 401 });
+    if (user.status === "suspended") return NextResponse.json({ ok: false, error: "suspended" }, { status: 403 });
     const token = signUserSession(user.id, user.role, MAX_AGE);
     const res = NextResponse.json({ ok: true, user });
     res.cookies.set(USER_SESSION_COOKIE, token, {

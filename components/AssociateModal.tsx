@@ -104,6 +104,7 @@ export default function AssociateModal() {
       setBusy(false);
       if (r.ok) { toast("Signed in"); done(); return; }
       if (r.error === "invalid") return setErr("Incorrect email or password.");
+      if (r.error === "suspended") return setErr("This account has been deactivated. Please contact Money Multiply support.");
       return setErr("Couldn’t sign in. Please try again.");
     }
   };

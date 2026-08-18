@@ -34,9 +34,12 @@ export async function createPayment(input: {
   amount: number;
   reference?: string;
   note?: string;
-  slipPath: string;
+  slipPath?: string;
+  status?: "submitted" | "acknowledged" | "rejected";
+  ackNote?: string;
 }): Promise<Payment> {
-  const row = {
+  const status = input.status || "submitted";
+  const row: any = {
     id: "pay-" + Date.now().toString(36) + crypto.randomBytes(3).toString("hex"),
     user_id: input.userId,
     user_name: input.userName,
@@ -44,9 +47,11 @@ export async function createPayment(input: {
     amount: Math.round(input.amount),
     reference: (input.reference || "").slice(0, 120),
     note: (input.note || "").slice(0, 400),
-    slip_path: input.slipPath,
-    status: "submitted",
+    slip_path: input.slipPath || "",
+    status,
   };
+  if (input.ackNote) row.ack_note = input.ackNote.slice(0, 400);
+  if (status === "acknowledged") row.ack_at = new Date().toISOString();
   const { data, error } = await sb().from(TABLE).insert(row).select().single();
   if (error) fail(error);
   return rowToPayment(data);

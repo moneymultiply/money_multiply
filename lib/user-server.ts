@@ -186,6 +186,13 @@ export async function listUsers(): Promise<AppUser[]> {
   return (data || []).map(rowToUser);
 }
 
+/** Permanently remove a user and their holdings. */
+export async function deleteUser(id: string): Promise<void> {
+  await sb().from(HOLDINGS).delete().eq("user_id", id);
+  const { error } = await sb().from(USERS).delete().eq("id", id);
+  if (error) fail(error);
+}
+
 export async function adminUpdateUser(
   id: string,
   patch: { commission?: number; status?: string; newPassword?: string }
