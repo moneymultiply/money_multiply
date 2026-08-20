@@ -1,7 +1,7 @@
 import "server-only";
 import crypto from "crypto";
 import { supabaseAdmin } from "./supabase-admin";
-import { signedUrl } from "./storage-server";
+import { signedUrl, deletePrivate } from "./storage-server";
 import type { Payment } from "./types";
 
 const TABLE = "mm_payments";
@@ -80,6 +80,15 @@ export async function listAllPayments(): Promise<Payment[]> {
       return p;
     })
   );
+}
+
+/** Permanently remove a payment record and its slip file (best-effort). */
+export async function deletePayment(id: string): Promise<void> {
+  const { data } = await sb().from(TABLE).select("slip_path").eq("id", id).maybeSingle();
+  const slip = (data as any)?.slip_path as string | undefined;
+  const { error } = await sb().from(TABLE).delete().eq("id", id);
+  if (error) fail(error);
+  if (slip) { try { await deletePrivate(slip); } catch { /* ignore storage cleanup errors */ } }
 }
 
 export async function acknowledgePayment(

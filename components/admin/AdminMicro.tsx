@@ -47,6 +47,16 @@ export default function AdminMicro() {
     update(m.id, "funded", ref);
   };
 
+  const removeMicro = async (m: MicroContribution) => {
+    if (!confirm(`Delete this ${fmt(m.amount)} contribution from ${m.userName || m.userEmail}? This cannot be undone.`)) return;
+    const r = await fetch(`/api/admin/micro/${m.id}`, { method: "DELETE" });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
+      setItems((prev) => prev.filter((x) => x.id !== m.id));
+      toast("Contribution deleted");
+    } else toast("Couldn’t delete");
+  };
+
   const totalActive = items.filter((m) => m.status !== "closed").reduce((s, m) => s + m.amount, 0);
 
   if (loading) return <p className="db-muted">Loading micro pool…</p>;
@@ -86,6 +96,9 @@ export default function AdminMicro() {
               {m.status !== "closed" && (
                 <button className="btn-mini danger" onClick={() => update(m.id, "closed")}>Close</button>
               )}
+              <button className="iconbtn del" aria-label="Delete contribution" onClick={() => removeMicro(m)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" /></svg>
+              </button>
             </div>
           </div>
         ))}

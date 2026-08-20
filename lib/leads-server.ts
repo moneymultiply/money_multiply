@@ -46,6 +46,12 @@ export async function createLead(input: {
   return lead;
 }
 
+export async function deleteLead(id: string): Promise<void> {
+  const sb = supabaseAdmin();
+  const { error } = await sb.from(TABLE).delete().eq("id", id);
+  if (error) throw new Error(error.message || JSON.stringify(error));
+}
+
 export async function clearLeads(): Promise<void> {
   const sb = supabaseAdmin();
   const { error } = await sb.from(TABLE).delete().neq("id", "");

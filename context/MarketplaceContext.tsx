@@ -34,6 +34,7 @@ interface MarketplaceCtx {
   leads: Lead[];
   captureLead: (source: LeadSource, contact: string, detail?: string) => void;
   clearLeads: () => Promise<void>;
+  deleteLead: (id: string) => Promise<{ ok: boolean }>;
   // admin
   isAdmin: boolean;
   setIsAdmin: (v: boolean) => void;
@@ -243,6 +244,19 @@ export function MarketplaceProvider({
     setLeads([]);
   }, []);
 
+  const deleteLead = useCallback(async (id: string): Promise<{ ok: boolean }> => {
+    try {
+      const res = await fetch(`/api/admin/leads/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setLeads((prev) => prev.filter((l) => l.id !== id));
+        return { ok: true };
+      }
+      return { ok: false };
+    } catch {
+      return { ok: false };
+    }
+  }, []);
+
   /* ---- admin (server-backed) ---- */
   const login = useCallback(async (passcode: string, remember: boolean) => {
     try {
@@ -439,6 +453,7 @@ export function MarketplaceProvider({
       leads,
       captureLead,
       clearLeads,
+      deleteLead,
       isAdmin,
       setIsAdmin,
       login,
@@ -476,6 +491,7 @@ export function MarketplaceProvider({
       leads,
       captureLead,
       clearLeads,
+      deleteLead,
       isAdmin,
       login,
       logout,

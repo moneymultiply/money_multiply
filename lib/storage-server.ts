@@ -59,6 +59,13 @@ export async function uploadPrivate(
   return name;
 }
 
+/** Remove a private file (e.g. when its payment record is deleted). Best-effort. */
+export async function deletePrivate(path: string): Promise<void> {
+  if (!path) return;
+  const sb = supabaseAdmin();
+  await sb.storage.from(PRIV).remove([path]);
+}
+
 /** Short-lived signed URL to view a private file (admin only). */
 export async function signedUrl(path: string, expiresSec = 3600): Promise<string> {
   if (!path) return "";

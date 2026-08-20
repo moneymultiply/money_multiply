@@ -67,6 +67,16 @@ export default function AdminPayments() {
     update(p.id, "acknowledged", ref);
   };
 
+  const removePayment = async (p: Payment) => {
+    if (!confirm(`Delete this ${fmt(p.amount)} payment from ${p.userName || p.userEmail}? This removes the record and its slip. This cannot be undone.`)) return;
+    const r = await fetch(`/api/admin/payments/${p.id}`, { method: "DELETE" });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
+      setPayments((prev) => prev.filter((x) => x.id !== p.id));
+      toast("Payment deleted");
+    } else toast("Couldn’t delete payment");
+  };
+
   const setP = (k: keyof typeof np) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setNp((p) => ({ ...p, [k]: e.target.value }));
 
@@ -184,6 +194,9 @@ export default function AdminPayments() {
             {p.status !== "rejected" && (
               <button className="btn-mini danger" onClick={() => update(p.id, "rejected")}>Reject</button>
             )}
+            <button className="iconbtn del" aria-label="Delete payment" onClick={() => removePayment(p)}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" /></svg>
+            </button>
           </div>
         </div>
       ))}

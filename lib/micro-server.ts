@@ -68,6 +68,12 @@ export async function listAllMicro(): Promise<MicroContribution[]> {
   return (data || []).map(rowToMicro);
 }
 
+/** Permanently remove a micro-pool contribution record. */
+export async function deleteMicro(id: string): Promise<void> {
+  const { error } = await sb().from(TABLE).delete().eq("id", id);
+  if (error) fail(error);
+}
+
 export async function updateMicroStatus(
   id: string,
   status: "pledged" | "funded" | "closed",

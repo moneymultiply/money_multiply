@@ -50,7 +50,7 @@ export default function AdminConsole({
   onMinimize: () => void;
   onChangePasscode: () => void;
 }) {
-  const { listings, leads, currency, fmt, fmtPlain, logout, deleteListing, reorderListing, clearLeads, toast } =
+  const { listings, leads, currency, fmt, fmtPlain, logout, deleteListing, reorderListing, clearLeads, deleteLead, toast } =
     useMarketplace();
   const [tab, setTab] = useState<"dash" | "leads" | "list" | "users" | "payments" | "micro">("dash");
   const [editing, setEditing] = useState<Listing | null | undefined>(undefined); // undefined = no form
@@ -167,6 +167,10 @@ export default function AdminConsole({
                   await clearLeads();
                   toast("Leads cleared");
                 }
+              }}
+              onDelete={async (id) => {
+                const r = await deleteLead(id);
+                toast(r.ok ? "Lead deleted" : "Couldn’t delete lead");
               }}
             />
           )}
@@ -366,12 +370,14 @@ function Leads({
   setLeadFilter,
   onExport,
   onClear,
+  onDelete,
 }: {
   leads: Lead[];
   leadFilter: "all" | LeadSource;
   setLeadFilter: (f: "all" | LeadSource) => void;
   onExport: () => void;
   onClear: () => void;
+  onDelete: (id: string) => void;
 }) {
   const byNews = leads.filter((l) => l.source === "news").length;
   const byWA = leads.filter((l) => l.source === "wa").length;
@@ -470,6 +476,14 @@ function Leads({
                   <span className={"lead-src " + l.source}>{SRC_LABEL[l.source]}</span>
                   <div className="lead-time">{timeAgo(l.ts)}</div>
                 </div>
+                <button
+                  className="iconbtn del"
+                  aria-label="Delete lead"
+                  style={{ flexShrink: 0 }}
+                  onClick={() => { if (confirm("Delete this lead?")) onDelete(l.id); }}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" /></svg>
+                </button>
               </div>
             );
           })}
