@@ -82,6 +82,8 @@ export default function DashboardClient() {
   const u = currentUser;
   const isPartner = u.role === "partner";
   const saved = listings.filter((l) => u.saved?.includes(l.id));
+  // Omkaram co-investment deed unlocks once the investor holds the Omkaram project.
+  const hasOmkaram = holdings.some((h) => /omkaram/i.test(h.title || ""));
   const memberSince = u.createdAt
     ? new Date(u.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
     : "—";
@@ -308,6 +310,26 @@ export default function DashboardClient() {
                     View my deed
                   </Link>
                 </div>
+                {hasOmkaram && (
+                  <div className="db-card">
+                    <div className="db-card-head">
+                      <h3 className="db-h3" style={{ margin: 0 }}>Omkaram Housing Complex — Co-Investment Deed</h3>
+                      <Link href="/agreement/omkaram" className="db-link">View &amp; download →</Link>
+                    </div>
+                    <p className="db-muted" style={{ marginTop: "12px" }}>
+                      As a co-investor in <b>Omkaram Housing Complex</b>, your Confidential Master Deed of
+                      Co-Investment has been generated in the name of <b>{u.name}</b> — ₹5,00,000 principal over
+                      a 48-month horizon. Open it to review the full terms and save a signed PDF.
+                    </p>
+                    <Link href="/agreement/omkaram" className="btn-gold" style={{ display: "inline-flex", padding: "11px 20px", marginTop: "14px", borderRadius: "10px", textDecoration: "none" }}>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ marginRight: "8px" }}>
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+                        <path d="M14 2v6h6M9 15l2 2 4-4" />
+                      </svg>
+                      View Omkaram deed
+                    </Link>
+                  </div>
+                )}
                 <MicroFundingPool />
                 <InvestorPayments />
                 <div className="db-card">
