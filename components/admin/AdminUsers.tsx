@@ -11,7 +11,7 @@ interface Detail {
 }
 
 export default function AdminUsers() {
-  const { fmt, toast } = useMarketplace();
+  const { fmt, toast, listings } = useMarketplace();
   const [users, setUsers] = useState<AppUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [detail, setDetail] = useState<Detail | null>(null);
@@ -288,7 +288,15 @@ export default function AdminUsers() {
                 </table>
               )}
               <div className="au-form">
-                <div className="field" style={{ margin: 0 }}><label>Project</label><input value={hold.title} onChange={(e) => setHold({ ...hold, title: e.target.value })} placeholder="Hindon Prime…" /></div>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>Project</label>
+                  <select value={hold.title} onChange={(e) => setHold({ ...hold, title: e.target.value })}>
+                    <option value="">Select project…</option>
+                    {listings.map((l) => (
+                      <option key={l.id} value={l.title}>{l.title}</option>
+                    ))}
+                  </select>
+                </div>
                 <div className="field" style={{ margin: 0 }}><label>Fractions</label><input type="number" value={hold.tokens} onChange={(e) => setHold({ ...hold, tokens: e.target.value })} placeholder="2" /></div>
                 <div className="field" style={{ margin: 0 }}><label>Amount (₹)</label><input type="number" value={hold.amount} onChange={(e) => setHold({ ...hold, amount: e.target.value })} placeholder="1000000" /></div>
                 <button className="btn-mini" onClick={addHolding}>Add</button>
