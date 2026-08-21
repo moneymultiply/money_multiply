@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const LINKS = [
   { href: "#marketplace", label: "Marketplace" },
@@ -23,6 +24,8 @@ export default function MobileDrawer({
   onAssociate: () => void;
   loggedIn?: boolean;
 }) {
+  const pathname = usePathname();
+  const to = (hash: string) => (pathname === "/" ? hash : "/" + hash);
   return (
     <div className={"drawer" + (open ? " open" : "")} id="drawer">
       <div className="scrim" onClick={onClose} />
@@ -45,7 +48,7 @@ export default function MobileDrawer({
           </button>
         </div>
         {LINKS.map((l) => (
-          <a key={l.href} href={l.href} onClick={onClose}>
+          <a key={l.href} href={to(l.href)} onClick={onClose}>
             {l.label} <span>→</span>
           </a>
         ))}
@@ -76,7 +79,7 @@ export default function MobileDrawer({
         <a
           className="btn-gold"
           style={{ justifyContent: "center", marginTop: "18px" }}
-          href="#marketplace"
+          href={to("#marketplace")}
           onClick={onClose}
         >
           Start Investing

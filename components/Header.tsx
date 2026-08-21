@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import { CURRENCIES } from "@/lib/currency";
 import MobileDrawer from "./MobileDrawer";
@@ -54,6 +55,10 @@ export default function Header() {
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("marketplace");
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  // On the home page use in-page anchors (smooth scroll); elsewhere route to home first.
+  const to = (hash: string) => (onHome ? hash : "/" + hash);
 
   useEffect(() => {
     let last = 0;
@@ -118,7 +123,7 @@ export default function Header() {
             </Link>
             <nav className="links" id="links">
               {NAV.map((n) => (
-                <a key={n.href} href={n.href} className={active === n.href.slice(1) ? "on" : ""}>
+                <a key={n.href} href={to(n.href)} className={onHome && active === n.href.slice(1) ? "on" : ""}>
                   {n.label}
                 </a>
               ))}
@@ -136,7 +141,7 @@ export default function Header() {
               <button className="btn-ghost" onClick={openAdmin}>
                 Admin
               </button>
-              <a className="btn-gold" href="#marketplace">
+              <a className="btn-gold" href={to("#marketplace")}>
                 Start Investing
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M13 6l6 6-6 6" />

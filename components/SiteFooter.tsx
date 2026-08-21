@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import { SECTION_IMAGES, PHONE_TEL, CONTACT_EMAIL } from "@/lib/data";
 
@@ -12,6 +13,8 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export default function SiteFooter() {
   const { captureLead, toast } = useMarketplace();
   const [email, setEmail] = useState("");
+  const pathname = usePathname();
+  const to = (hash: string) => (pathname === "/" ? hash : "/" + hash);
 
   const subscribe = () => {
     const v = email.trim();
@@ -88,10 +91,10 @@ export default function SiteFooter() {
             </div>
             <div className="foot-col">
               <h5>Company</h5>
-              <a href="#about"><i className="fchev">›</i>About Us</a>
-              <a href="#about"><i className="fchev">›</i>Our Mission</a>
-              <a href="#about"><i className="fchev">›</i>Leadership</a>
-              <a href="#about"><i className="fchev">›</i>Careers</a>
+              <a href={to("#about")}><i className="fchev">›</i>About Us</a>
+              <a href={to("#about")}><i className="fchev">›</i>Our Mission</a>
+              <a href={to("#about")}><i className="fchev">›</i>Leadership</a>
+              <a href={to("#about")}><i className="fchev">›</i>Careers</a>
               <a
                 href={genericWa()}
                 target="_blank"
@@ -103,9 +106,9 @@ export default function SiteFooter() {
             </div>
             <div className="foot-col">
               <h5>Investments</h5>
-              <a href="#marketplace"><i className="fchev">›</i>Marketplace</a>
-              <a href="#marketplace"><i className="fchev">›</i>Fractional Properties</a>
-              <a href="#how"><i className="fchev">›</i>How It Works</a>
+              <a href={to("#marketplace")}><i className="fchev">›</i>Marketplace</a>
+              <a href={to("#marketplace")}><i className="fchev">›</i>Fractional Properties</a>
+              <a href={to("#how")}><i className="fchev">›</i>How It Works</a>
               <a
                 href={genericWa()}
                 target="_blank"
@@ -114,7 +117,7 @@ export default function SiteFooter() {
               >
                 <i className="fchev">›</i>Investor Portal
               </a>
-              <a href="#marketplace"><i className="fchev">›</i>Investment Tiers</a>
+              <a href={to("#marketplace")}><i className="fchev">›</i>Investment Tiers</a>
             </div>
             <div className="foot-col">
               <h5>Resources</h5>
