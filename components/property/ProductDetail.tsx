@@ -62,6 +62,8 @@ export default function ProductDetail({ id }: { id: string }) {
   const mapSrc = "https://www.google.com/maps?q=" + encodeURIComponent(l.loc) + "&output=embed";
   const similar = listings.filter((x) => x.id !== l.id).slice(0, 3);
   const closing = pct >= 90;
+  // Downloadable project report (currently available for Omkaram Housing Complex).
+  const isOmkaram = /omkaram/i.test(l.title || "");
 
   const highlights = [
     "Minimum ticket " + fmtPlain(l.token) + " per fraction",
@@ -121,6 +123,22 @@ export default function ProductDetail({ id }: { id: string }) {
             </span>
           </div>
           <h1 className="pd-title">{l.title}</h1>
+
+          {isOmkaram && (
+            <a
+              className="btn-gold"
+              href="/docs/omkaram-project-report.pdf"
+              target="_blank"
+              rel="noopener"
+              download
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "11px 20px", borderRadius: "10px", margin: "4px 0 18px", textDecoration: "none" }}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.9">
+                <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" />
+              </svg>
+              Download Project Report
+            </a>
+          )}
 
           {/* spec strip */}
           <div className="pd-specs">
