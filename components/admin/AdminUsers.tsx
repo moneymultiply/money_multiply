@@ -141,6 +141,16 @@ export default function AdminUsers() {
     } else toast("Couldn’t set password");
   };
 
+  const removeUserRow = async (u: AppUser) => {
+    if (!confirm(`Delete ${u.name || u.email}? This permanently removes the account and their reservations. This cannot be undone.`)) return;
+    const r = await fetch(`/api/admin/users/${u.id}`, { method: "DELETE" });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
+      setUsers((prev) => prev.filter((x) => x.id !== u.id));
+      toast("User deleted");
+    } else toast("Couldn’t delete user");
+  };
+
   const toggleActive = async () => {
     if (!detail) return;
     const next = detail.user.status === "suspended" ? "active" : "suspended";
@@ -386,16 +396,19 @@ export default function AdminUsers() {
       ) : (
         <div className="admin-list">
           {filtered.map((u) => (
-            <button className="adm-item" key={u.id} style={{ textAlign: "left", cursor: "pointer" }} onClick={() => openDetail(u.id)}>
+            <div className="adm-item" key={u.id} style={{ textAlign: "left", cursor: "pointer" }} role="button" tabIndex={0} onClick={() => openDetail(u.id)} onKeyDown={(e) => { if (e.key === "Enter") openDetail(u.id); }}>
               <span className={"lead-src " + (u.role === "partner" ? "partner" : "investor")} style={{ flexShrink: 0 }}>{u.role}</span>
               <div className="ai-info">
-                <b>{u.name || u.email}</b>
+                <b>{u.name || u.email}{u.status === "suspended" ? " · deactivated" : ""}</b>
                 <span>{u.email}{u.role === "partner" ? ` · ${fmt(u.commission)} commission` : ""}</span>
               </div>
               {viaHq(u) && <span className="lead-src hq" style={{ flexShrink: 0 }}>via HQ</span>}
               {u.resetRequested && <span className="lead-src wa" style={{ flexShrink: 0 }}>reset</span>}
               <span className="lead-time">{u.createdAt ? new Date(u.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) : ""}</span>
-            </button>
+              <button className="iconbtn del" aria-label="Delete user" style={{ flexShrink: 0 }} onClick={(e) => { e.stopPropagation(); removeUserRow(u); }}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6" /></svg>
+              </button>
+            </div>
           ))}
         </div>
       )}
