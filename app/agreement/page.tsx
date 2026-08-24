@@ -41,7 +41,7 @@ export default function AgreementPage() {
         <button className="ag-btn gold" onClick={() => window.print()}>Print / Save as PDF</button>
       </div>
       {isPartner ? (
-        <PartnerAgreement name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} />
+        <PartnerAgreement name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={u.pan} aadhaar={u.aadhaar} />
       ) : (
         <InvestorDeed name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={u.pan} aadhaar={u.aadhaar} />
       )}

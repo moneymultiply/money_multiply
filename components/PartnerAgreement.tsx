@@ -3,16 +3,25 @@
 /* Channel Partner Offer Letter — auto-generated per partner.
    Content transcribed from the official Money Multiply Channel Partner Offer. */
 
+const Fill = ({ w = 130 }: { w?: number }) => (
+  <span className="ag-fill" style={{ minWidth: w }} />
+);
+const Val = ({ v, w = 120 }: { v?: string; w?: number }) => (v ? <b>{v}</b> : <Fill w={w} />);
+
 export default function PartnerAgreement({
   name,
   email,
   dateStr,
   refNo,
+  pan,
+  aadhaar,
 }: {
   name: string;
   email: string;
   dateStr: string;
   refNo: string;
+  pan?: string;
+  aadhaar?: string;
 }) {
   return (
     <div className="ag-doc">
@@ -140,6 +149,9 @@ export default function PartnerAgreement({
           <div className="ag-sign-line" />
           <b>Channel Partner / Applicant</b>
           <span className="ag-muted">{name}</span>
+          {email && <span className="ag-muted">{email}</span>}
+          <span className="ag-muted">PAN: <Val v={pan} w={110} /></span>
+          <span className="ag-muted">Aadhaar: <Val v={aadhaar} w={120} /></span>
           <span className="ag-muted">Authorized Signature &amp; Seal</span>
         </div>
         <div className="ag-sign-col">

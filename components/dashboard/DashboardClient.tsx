@@ -346,26 +346,6 @@ export default function DashboardClient() {
                     </Link>
                   </div>
                 )}
-                <div className="db-card">
-                  <h3 className="db-h3">KYC details (PAN &amp; Aadhaar)</h3>
-                  <p className="db-muted" style={{ marginBottom: "16px" }}>
-                    Add your PAN and Aadhaar number. These personalise your co-investment agreements and are
-                    used for KYC verification. Stored securely — visible only to you and the Money Multiply team.
-                  </p>
-                  <div className="frow">
-                    <div className="field">
-                      <label>PAN</label>
-                      <input value={pan} onChange={(e) => setPan(e.target.value.toUpperCase())} maxLength={10} placeholder="ABCDE1234F" style={{ textTransform: "uppercase" }} />
-                    </div>
-                    <div className="field">
-                      <label>Aadhaar number</label>
-                      <input value={aadhaar} onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, ""))} maxLength={12} inputMode="numeric" placeholder="12-digit number" />
-                    </div>
-                  </div>
-                  <button className={"btn-gold" + (kycSaving ? " loading" : "")} onClick={saveKyc} disabled={kycSaving} style={{ padding: "12px 22px" }}>
-                    Save KYC details
-                  </button>
-                </div>
                 <MicroFundingPool />
                 <InvestorPayments />
                 <div className="db-card">
@@ -392,6 +372,28 @@ export default function DashboardClient() {
                 </div>
               </>
             )}
+
+            {/* KYC — shared by partners & investors */}
+            <div className="db-card">
+              <h3 className="db-h3">KYC details (PAN &amp; Aadhaar)</h3>
+              <p className="db-muted" style={{ marginBottom: "16px" }}>
+                Add your PAN and Aadhaar number. These personalise your official agreements and are used
+                for KYC verification. Stored securely — visible only to you and the Money Multiply team.
+              </p>
+              <div className="frow">
+                <div className="field">
+                  <label>PAN</label>
+                  <input value={pan} onChange={(e) => setPan(e.target.value.toUpperCase())} maxLength={10} placeholder="ABCDE1234F" style={{ textTransform: "uppercase" }} />
+                </div>
+                <div className="field">
+                  <label>Aadhaar number</label>
+                  <input value={aadhaar} onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, ""))} maxLength={12} inputMode="numeric" placeholder="12-digit number" />
+                </div>
+              </div>
+              <button className={"btn-gold" + (kycSaving ? " loading" : "")} onClick={saveKyc} disabled={kycSaving} style={{ padding: "12px 22px" }}>
+                Save KYC details
+              </button>
+            </div>
 
             {/* saved opportunities */}
             <div className="db-card">
