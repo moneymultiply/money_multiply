@@ -100,6 +100,10 @@ alter table public.mm_users add column if not exists reset_requested boolean not
 -- User avatar image URL. Idempotent.
 alter table public.mm_users add column if not exists avatar text not null default '';
 
+-- KYC identifiers (PAN & Aadhaar) — shown on generated contracts. Idempotent.
+alter table public.mm_users add column if not exists pan text not null default '';
+alter table public.mm_users add column if not exists aadhaar text not null default '';
+
 -- Admin "head" referral code (shareable partner/investor invite). Idempotent.
 alter table public.mm_admin_auth add column if not exists head_ref text not null default '';
 

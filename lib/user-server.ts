@@ -59,6 +59,8 @@ function rowToUser(r: any): AppUser {
     saved: Array.isArray(r.saved) ? r.saved : [],
     bank: r.bank && typeof r.bank === "object" ? r.bank : {},
     avatar: r.avatar || "",
+    pan: r.pan || "",
+    aadhaar: r.aadhaar || "",
     resetRequested: !!r.reset_requested,
     createdAt: r.created_at,
   };
@@ -138,6 +140,15 @@ export async function updateProfile(
   const { data, error } = await sb().from(USERS).update(upd).eq("id", id).select().single();
   if (error) fail(error);
   return rowToUser(data);
+}
+
+/** Investor/partner KYC — PAN & Aadhaar (normalised, lightly validated). */
+export async function updateKyc(id: string, kyc: { pan?: string; aadhaar?: string }): Promise<{ pan: string; aadhaar: string }> {
+  const pan = String(kyc.pan || "").toUpperCase().replace(/\s+/g, "").slice(0, 10);
+  const aadhaar = String(kyc.aadhaar || "").replace(/\D/g, "").slice(0, 12);
+  const { error } = await sb().from(USERS).update({ pan, aadhaar }).eq("id", id);
+  if (error) fail(error);
+  return { pan, aadhaar };
 }
 
 export async function updateBank(id: string, bank: BankDetails): Promise<BankDetails> {

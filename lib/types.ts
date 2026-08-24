@@ -55,6 +55,8 @@ export interface AppUser {
   saved: string[];
   bank: BankDetails;
   avatar: string;
+  pan: string;
+  aadhaar: string;
   resetRequested?: boolean;
   createdAt?: string;
 }

@@ -43,7 +43,7 @@ export default function AgreementPage() {
       {isPartner ? (
         <PartnerAgreement name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} />
       ) : (
-        <InvestorDeed name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} />
+        <InvestorDeed name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={u.pan} aadhaar={u.aadhaar} />
       )}
     </div>
   );

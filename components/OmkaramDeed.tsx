@@ -6,15 +6,21 @@ const Fill = ({ w = 160 }: { w?: number }) => (
   <span className="ag-fill" style={{ minWidth: w }} />
 );
 
+const Val = ({ v, w = 130 }: { v?: string; w?: number }) => (v ? <b>{v}</b> : <Fill w={w} />);
+
 export default function OmkaramDeed({
   name,
   email,
   refNo,
+  pan,
+  aadhaar,
 }: {
   name: string;
   email: string;
   dateStr: string;
   refNo: string;
+  pan?: string;
+  aadhaar?: string;
 }) {
   const investor = name || "________________________";
 
@@ -60,7 +66,7 @@ export default function OmkaramDeed({
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
         <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing at{" "}
-        <Fill w={230} />, PAN <Fill w={120} />, Aadhaar / other legally permissible KYC identifier <Fill w={140} />
+        <Fill w={230} />, PAN <Val v={pan} w={120} />, Aadhaar / other legally permissible KYC identifier <Val v={aadhaar} w={140} />
         {" "}(hereinafter &quot;Co-Investor&quot; or &quot;Second Party&quot;), which expression includes permitted
         legal representatives and assigns.
       </p>
@@ -209,7 +215,7 @@ export default function OmkaramDeed({
           <tr><td>Parent Company</td><td>Money Multiply Trading &amp; Consultant Private Limited · CIN: U70200UP2026PTC253626 · B-128, First Floor, Sector-2 Noida, Gautam Buddha Nagar, Uttar Pradesh – 201301</td></tr>
           <tr><td>Management Company</td><td><Fill w={200} /></td></tr>
           <tr><td>Co-Investor Name</td><td><b>{investor}</b>{email ? ` · ${email}` : ""}</td></tr>
-          <tr><td>PAN / KYC ID</td><td><Fill w={130} /></td></tr>
+          <tr><td>PAN / KYC ID</td><td>{pan || aadhaar ? <b>{[pan, aadhaar].filter(Boolean).join(" · ")}</b> : <Fill w={130} />}</td></tr>
           <tr><td>Address</td><td><Fill w={230} /></td></tr>
           <tr><td>Bank / Account for Disbursement</td><td><Fill w={220} /></td></tr>
         </tbody>
@@ -234,7 +240,8 @@ export default function OmkaramDeed({
           <b>Co-Investor</b>
           <span className="ag-muted">{investor}</span>
           {email && <span className="ag-muted">{email}</span>}
-          <span className="ag-muted">PAN: <Fill w={110} /></span>
+          <span className="ag-muted">PAN: <Val v={pan} w={110} /></span>
+          <span className="ag-muted">Aadhaar: <Val v={aadhaar} w={120} /></span>
           <span className="ag-muted">Date: <Fill w={70} /> · Place: <Fill w={90} /></span>
         </div>
       </div>

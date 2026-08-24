@@ -73,6 +73,8 @@ export default function MicroAgreementPage() {
         dateStr={dateStr}
         refNo={refNo}
         amount={item.amount}
+        pan={currentUser.pan}
+        aadhaar={currentUser.aadhaar}
       />
     </div>
   );

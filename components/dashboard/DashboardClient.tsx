@@ -16,12 +16,15 @@ interface Referral {
 }
 
 export default function DashboardClient() {
-  const { currentUser, userReady, userLogout, listings, fmt, openAssociate, toast, updateBank, saveProfile, uploadAvatar } =
+  const { currentUser, userReady, userLogout, listings, fmt, openAssociate, toast, updateBank, updateKyc, saveProfile, uploadAvatar } =
     useMarketplace();
   const [holdings, setHoldings] = useState<Holding[]>([]);
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [bank, setBank] = useState<BankDetails>({});
   const [bankSaving, setBankSaving] = useState(false);
+  const [pan, setPan] = useState("");
+  const [aadhaar, setAadhaar] = useState("");
+  const [kycSaving, setKycSaving] = useState(false);
   const [editing, setEditing] = useState(false);
   const [eName, setEName] = useState("");
   const [ePhone, setEPhone] = useState("");
@@ -31,6 +34,8 @@ export default function DashboardClient() {
   useEffect(() => {
     if (!currentUser) return;
     if (currentUser.bank) setBank(currentUser.bank);
+    setPan(currentUser.pan || "");
+    setAadhaar(currentUser.aadhaar || "");
     fetch("/api/user/me")
       .then((r) => r.json())
       .then((d) => {
@@ -50,6 +55,17 @@ export default function DashboardClient() {
   };
   const setB = (k: keyof BankDetails) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setBank((b) => ({ ...b, [k]: e.target.value }));
+
+  const saveKyc = async () => {
+    const p = pan.trim().toUpperCase();
+    const a = aadhaar.replace(/\D/g, "");
+    if (p && !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(p)) return toast("Enter a valid 10-character PAN (e.g. ABCDE1234F)");
+    if (a && a.length !== 12) return toast("Aadhaar must be 12 digits");
+    setKycSaving(true);
+    const r = await updateKyc(p, a);
+    setKycSaving(false);
+    toast(r.ok ? "KYC details saved" : "Couldn’t save KYC details");
+  };
 
   /* ---- gates ---- */
   if (!userReady) {
@@ -330,6 +346,26 @@ export default function DashboardClient() {
                     </Link>
                   </div>
                 )}
+                <div className="db-card">
+                  <h3 className="db-h3">KYC details (PAN &amp; Aadhaar)</h3>
+                  <p className="db-muted" style={{ marginBottom: "16px" }}>
+                    Add your PAN and Aadhaar number. These personalise your co-investment agreements and are
+                    used for KYC verification. Stored securely — visible only to you and the Money Multiply team.
+                  </p>
+                  <div className="frow">
+                    <div className="field">
+                      <label>PAN</label>
+                      <input value={pan} onChange={(e) => setPan(e.target.value.toUpperCase())} maxLength={10} placeholder="ABCDE1234F" style={{ textTransform: "uppercase" }} />
+                    </div>
+                    <div className="field">
+                      <label>Aadhaar number</label>
+                      <input value={aadhaar} onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, ""))} maxLength={12} inputMode="numeric" placeholder="12-digit number" />
+                    </div>
+                  </div>
+                  <button className={"btn-gold" + (kycSaving ? " loading" : "")} onClick={saveKyc} disabled={kycSaving} style={{ padding: "12px 22px" }}>
+                    Save KYC details
+                  </button>
+                </div>
                 <MicroFundingPool />
                 <InvestorPayments />
                 <div className="db-card">

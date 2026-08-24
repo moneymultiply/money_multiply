@@ -36,17 +36,23 @@ function inWords(n: number): string {
 const PLOT_COST = 2000000; // ₹20,00,000 — 100 sq yd master plot
 const RATE_PER_SQYD = 20000; // ₹20,000 / sq yd
 
+const Val = ({ v, w = 120 }: { v?: string; w?: number }) => (v ? <b>{v}</b> : <Fill w={w} />);
+
 export default function MicroDeed({
   name,
   email,
   refNo,
   amount,
+  pan,
+  aadhaar,
 }: {
   name: string;
   email: string;
   dateStr: string;
   refNo: string;
   amount: number;
+  pan?: string;
+  aadhaar?: string;
 }) {
   const investor = name || "________________________";
   const amt = Math.max(0, Math.round(amount || 0));
@@ -218,7 +224,8 @@ export default function MicroDeed({
           <span className="ag-muted">Name: {investor}</span>
           {email && <span className="ag-muted">{email}</span>}
           <span className="ag-muted">Contribution: {inr(amt)}</span>
-          <span className="ag-muted">PAN / ID: <Fill w={120} /></span>
+          <span className="ag-muted">PAN: <Val v={pan} w={120} /></span>
+          <span className="ag-muted">Aadhaar: <Val v={aadhaar} w={130} /></span>
         </div>
       </div>
 

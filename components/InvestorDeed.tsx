@@ -7,16 +7,22 @@ const Fill = ({ w = 160 }: { w?: number }) => (
   <span className="ag-fill" style={{ minWidth: w }} />
 );
 
+/** Renders a KYC value if provided, otherwise a blank fill-in line. */
+const Val = ({ v, w = 130 }: { v?: string; w?: number }) => (v ? <b>{v}</b> : <Fill w={w} />);
+
 export default function InvestorDeed({
   name,
   email,
-  dateStr,
   refNo,
+  pan,
+  aadhaar,
 }: {
   name: string;
   email: string;
   dateStr: string;
   refNo: string;
+  pan?: string;
+  aadhaar?: string;
 }) {
   const investor = name || "________________________";
   return (
@@ -80,8 +86,8 @@ export default function InvestorDeed({
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
         <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing
-        permanently at <Fill w={230} />, bearing Permanent Account Number (PAN): <Fill w={130} /> and
-        Aadhaar Number: <Fill w={140} /> (the &quot;Co-Investor&quot; or &quot;Second Party&quot;).
+        permanently at <Fill w={230} />, bearing Permanent Account Number (PAN): <Val v={pan} w={130} /> and
+        Aadhaar Number: <Val v={aadhaar} w={140} /> (the &quot;Co-Investor&quot; or &quot;Second Party&quot;).
       </p>
       <p>
         The Company and the Co-Investor shall collectively be the &quot;Parties&quot; and individually a
@@ -172,7 +178,7 @@ export default function InvestorDeed({
           <b>Principal Co-Investor</b>
           <span className="ag-muted">{investor}</span>
           {email && <span className="ag-muted">{email}</span>}
-          <span className="ag-muted">PAN: <Fill w={110} /></span>
+          <span className="ag-muted">PAN: <Val v={pan} w={110} /></span>
           <span className="ag-muted">Date: <Fill w={70} /> · Place: <Fill w={90} /></span>
         </div>
         <div className="ag-sign-col">
