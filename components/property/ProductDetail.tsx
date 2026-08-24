@@ -30,6 +30,13 @@ const Pin = () => (
 const TABS = ["Overview", "Details", "Financials", "Documents", "Fractions", "Location"] as const;
 type Tab = (typeof TABS)[number];
 
+// Downloadable project reports — matched against the listing title.
+// Add a new { match, file } entry (and drop the PDF in /public/docs) per project.
+const PROJECT_REPORTS: { match: RegExp; file: string }[] = [
+  { match: /omkaram/i, file: "/docs/omkaram-project-report.pdf" },
+  { match: /himalayan hills ranikhet/i, file: "/docs/himalayan-hills-project-report.pdf" },
+];
+
 export default function ProductDetail({ id }: { id: string }) {
   const { listings, getListing, fmt, fmtPlain, ready, captureLead, currentUser, toggleSave, isSaved } =
     useMarketplace();
@@ -62,8 +69,8 @@ export default function ProductDetail({ id }: { id: string }) {
   const mapSrc = "https://www.google.com/maps?q=" + encodeURIComponent(l.loc) + "&output=embed";
   const similar = listings.filter((x) => x.id !== l.id).slice(0, 3);
   const closing = pct >= 90;
-  // Downloadable project report (currently available for Omkaram Housing Complex).
-  const isOmkaram = /omkaram/i.test(l.title || "");
+  // Downloadable project report for this listing, if one is available.
+  const report = PROJECT_REPORTS.find((r) => r.match.test(l.title || ""));
 
   const highlights = [
     "Minimum ticket " + fmtPlain(l.token) + " per fraction",
@@ -124,10 +131,10 @@ export default function ProductDetail({ id }: { id: string }) {
           </div>
           <h1 className="pd-title">{l.title}</h1>
 
-          {isOmkaram && (
+          {report && (
             <a
               className="btn-gold"
-              href="/docs/omkaram-project-report.pdf"
+              href={report.file}
               target="_blank"
               rel="noopener"
               download
