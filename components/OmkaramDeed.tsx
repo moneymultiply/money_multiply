@@ -17,6 +17,7 @@ export default function OmkaramDeed({
   pan,
   aadhaar,
   address,
+  guardian,
   execDate,
 }: {
   name: string;
@@ -26,6 +27,7 @@ export default function OmkaramDeed({
   pan?: string;
   aadhaar?: string;
   address?: string;
+  guardian?: string;
   execDate?: string;
 }) {
   const investor = name || "________________________";
@@ -72,7 +74,7 @@ export default function OmkaramDeed({
       </p>
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
-        <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing at{" "}
+        <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Val v={guardian} w={150} />, residing at{" "}
         <Val v={address} w={230} />, PAN <Val v={pan} w={120} />, Aadhaar / other legally permissible KYC identifier <Val v={aadhaar} w={140} />
         {" "}(hereinafter &quot;Co-Investor&quot; or &quot;Second Party&quot;), which expression includes permitted
         legal representatives and assigns.

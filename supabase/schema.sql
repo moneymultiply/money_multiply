@@ -104,6 +104,7 @@ alter table public.mm_users add column if not exists avatar text not null defaul
 alter table public.mm_users add column if not exists pan text not null default '';
 alter table public.mm_users add column if not exists aadhaar text not null default '';
 alter table public.mm_users add column if not exists address text not null default '';
+alter table public.mm_users add column if not exists guardian text not null default '';
 
 -- Admin "head" referral code (shareable partner/investor invite). Idempotent.
 alter table public.mm_admin_auth add column if not exists head_ref text not null default '';

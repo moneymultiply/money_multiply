@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 export async function POST(req: NextRequest) {
   const sess = verifyUserSession(req.cookies.get(USER_SESSION_COOKIE)?.value);
   if (!sess) return NextResponse.json({ ok: false, error: "unauthorized" }, { status: 401 });
-  let body: { pan?: unknown; aadhaar?: unknown; address?: unknown };
+  let body: { pan?: unknown; aadhaar?: unknown; address?: unknown; guardian?: unknown };
   try {
     body = await req.json();
   } catch {
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
       pan: typeof body?.pan === "string" ? body.pan : "",
       aadhaar: typeof body?.aadhaar === "string" ? body.aadhaar : "",
       address: typeof body?.address === "string" ? body.address : "",
+      guardian: typeof body?.guardian === "string" ? body.guardian : "",
     });
     return NextResponse.json({ ok: true, ...kyc });
   } catch (e) {

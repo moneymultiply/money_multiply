@@ -58,6 +58,7 @@ export interface AppUser {
   pan: string;
   aadhaar: string;
   address: string;
+  guardian: string;
   resetRequested?: boolean;
   createdAt?: string;
 }
