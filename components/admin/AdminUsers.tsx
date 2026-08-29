@@ -17,7 +17,7 @@ export default function AdminUsers() {
   const [detail, setDetail] = useState<Detail | null>(null);
   const [commission, setCommission] = useState("");
   const [status, setStatus] = useState("active");
-  const [hold, setHold] = useState({ title: "", tokens: "", amount: "" });
+  const [hold, setHold] = useState({ title: "", tokens: "", amount: "", status: "approved" });
   const [newPass, setNewPass] = useState("");
   const [headCode, setHeadCode] = useState("");
   const [filter, setFilter] = useState<"all" | "partner" | "investor" | "hq">("all");
@@ -109,12 +109,13 @@ export default function AdminUsers() {
         title: hold.title.trim(),
         tokens: parseInt(hold.tokens, 10) || 0,
         amount: parseFloat(hold.amount) || 0,
+        status: hold.status,
       }),
     });
     const d = await r.json().catch(() => ({}));
     if (d?.ok) {
       setDetail((p) => (p ? { ...p, holdings: [d.holding, ...p.holdings] } : p));
-      setHold({ title: "", tokens: "", amount: "" });
+      setHold({ title: "", tokens: "", amount: "", status: "approved" });
       toast("Holding added");
     } else toast("Couldn’t add holding");
   };
@@ -122,6 +123,19 @@ export default function AdminUsers() {
   const delHolding = async (id: string) => {
     const r = await fetch(`/api/admin/holdings/${id}`, { method: "DELETE" });
     if (r.ok) setDetail((p) => (p ? { ...p, holdings: p.holdings.filter((h) => h.id !== id) } : p));
+  };
+
+  const setHoldingStatus = async (id: string, status: string) => {
+    const r = await fetch(`/api/admin/holdings/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok && d.ok) {
+      setDetail((p) => (p ? { ...p, holdings: p.holdings.map((h) => (h.id === id ? d.holding : h)) } : p));
+      toast(status === "approved" ? "Marked approved — deed unlocked" : "Marked reserved");
+    } else toast("Couldn’t update holding");
   };
 
   const setPassword = async () => {
@@ -282,18 +296,27 @@ export default function AdminUsers() {
               {detail.holdings.length > 0 && (
                 <table className="pd-fin">
                   <tbody>
-                    {detail.holdings.map((h) => (
+                    {detail.holdings.map((h) => {
+                      const approved = ["approved", "allotted", "confirmed", "funded"].includes((h.status || "").toLowerCase());
+                      return (
                       <tr key={h.id}>
                         <td>{h.title}</td>
                         <td>{h.tokens}</td>
                         <td>{fmt(h.amount)}</td>
-                        <td style={{ textAlign: "right" }}>
+                        <td>
+                          <span className={"pay-badge " + (approved ? "acknowledged" : "submitted")} style={{ textTransform: "capitalize" }}>{h.status || "reserved"}</span>
+                        </td>
+                        <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+                          <button className="btn-mini" style={{ marginRight: "6px" }} onClick={() => setHoldingStatus(h.id, approved ? "reserved" : "approved")}>
+                            {approved ? "Set reserved" : "Approve"}
+                          </button>
                           <button className="iconbtn del" onClick={() => delHolding(h.id)} aria-label="Delete">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" /></svg>
                           </button>
                         </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                   </tbody>
                 </table>
               )}
@@ -309,8 +332,18 @@ export default function AdminUsers() {
                 </div>
                 <div className="field" style={{ margin: 0 }}><label>Fractions</label><input type="number" value={hold.tokens} onChange={(e) => setHold({ ...hold, tokens: e.target.value })} placeholder="2" /></div>
                 <div className="field" style={{ margin: 0 }}><label>Amount (₹)</label><input type="number" value={hold.amount} onChange={(e) => setHold({ ...hold, amount: e.target.value })} placeholder="1000000" /></div>
+                <div className="field" style={{ margin: 0 }}>
+                  <label>Status</label>
+                  <select value={hold.status} onChange={(e) => setHold({ ...hold, status: e.target.value })}>
+                    <option value="approved">Approved</option>
+                    <option value="reserved">Reserved (pending)</option>
+                  </select>
+                </div>
                 <button className="btn-mini" onClick={addHolding}>Add</button>
               </div>
+              <p className="db-muted" style={{ fontSize: "11.5px", marginTop: "8px" }}>
+                An <b>Approved</b> holding unlocks that project&apos;s co-investment deed on the investor&apos;s dashboard.
+              </p>
             </>
           )}
         </div>

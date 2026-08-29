@@ -251,3 +251,9 @@ export async function deleteHolding(id: string): Promise<void> {
   const { error } = await sb().from(HOLDINGS).delete().eq("id", id);
   if (error) fail(error);
 }
+
+export async function updateHoldingStatus(id: string, status: string): Promise<Holding> {
+  const { data, error } = await sb().from(HOLDINGS).update({ status }).eq("id", id).select().single();
+  if (error) fail(error);
+  return rowToHolding(data);
+}

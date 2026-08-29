@@ -98,8 +98,11 @@ export default function DashboardClient() {
   const u = currentUser;
   const isPartner = u.role === "partner";
   const saved = listings.filter((l) => u.saved?.includes(l.id));
-  // Omkaram co-investment deed unlocks once the investor holds the Omkaram project.
-  const hasOmkaram = holdings.some((h) => /omkaram/i.test(h.title || ""));
+  // Co-investment deeds unlock only once the investor has an APPROVED holding for that
+  // plot — a brand-new investor with no approved investment sees no deed.
+  const isApproved = (s?: string) => ["approved", "allotted", "confirmed", "funded"].includes((s || "").toLowerCase());
+  const hasHimalayan = holdings.some((h) => /himalayan hills/i.test(h.title || "") && isApproved(h.status));
+  const hasOmkaram = holdings.some((h) => /omkaram/i.test(h.title || "") && isApproved(h.status));
   const memberSince = u.createdAt
     ? new Date(u.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
     : "—";
@@ -308,6 +311,16 @@ export default function DashboardClient() {
               </>
             ) : (
               <>
+                {!hasHimalayan && !hasOmkaram && (
+                  <div className="db-card">
+                    <h3 className="db-h3">Co-Investment Deed</h3>
+                    <p className="db-muted" style={{ marginTop: "10px" }}>
+                      Your personalised co-investment agreement will appear here automatically once your
+                      investment in a plot is approved by the Money Multiply team.
+                    </p>
+                  </div>
+                )}
+                {hasHimalayan && (
                 <div className="db-card">
                   <div className="db-card-head">
                     <h3 className="db-h3" style={{ margin: 0 }}>Co-Investment Deed</h3>
@@ -326,6 +339,7 @@ export default function DashboardClient() {
                     View my deed
                   </Link>
                 </div>
+                )}
                 {hasOmkaram && (
                   <div className="db-card">
                     <div className="db-card-head">
