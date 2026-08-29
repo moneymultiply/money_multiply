@@ -59,6 +59,28 @@ export async function uploadPrivate(
   return name;
 }
 
+/** Issue a short-lived signed URL the browser can upload a private file to directly
+ *  (bypasses the serverless request-body limit for large slips). */
+export async function createSignedUpload(
+  ext: string,
+  prefix = "payment"
+): Promise<{ path: string; signedUrl: string; token: string }> {
+  await ensurePriv();
+  const sb = supabaseAdmin();
+  const name = prefix + "-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8) + "." + ext;
+  const { data, error } = await sb.storage.from(PRIV).createSignedUploadUrl(name);
+  if (error) throw new Error(error.message || JSON.stringify(error));
+  return { path: name, signedUrl: data.signedUrl, token: data.token };
+}
+
+/** True if a private object exists (used to validate a client-uploaded slip path). */
+export async function privateExists(path: string): Promise<boolean> {
+  if (!path) return false;
+  const sb = supabaseAdmin();
+  const { error } = await sb.storage.from(PRIV).createSignedUrl(path, 60);
+  return !error;
+}
+
 /** Remove a private file (e.g. when its payment record is deleted). Best-effort. */
 export async function deletePrivate(path: string): Promise<void> {
   if (!path) return;

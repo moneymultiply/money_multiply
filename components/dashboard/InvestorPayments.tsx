@@ -41,15 +41,35 @@ export default function InvestorPayments() {
     if (busy) return;
     if (!(Number(amount) > 0)) return toast("Enter the amount paid");
     if (!file) return toast("Attach your payment slip");
-    if (file.size > 8 * 1024 * 1024) return toast("File too large (max 8MB)");
+    if (file.size > 20 * 1024 * 1024) return toast("File too large (max 20MB)");
     setBusy(true);
     try {
-      const fd = new FormData();
-      fd.append("amount", amount);
-      fd.append("reference", reference);
-      fd.append("note", note);
-      fd.append("file", file);
-      const r = await fetch("/api/user/payments", { method: "POST", body: fd });
+      // 1. get a signed upload URL (validates the file type server-side)
+      const contentType = file.type || "application/octet-stream";
+      const s = await fetch("/api/user/payments/sign", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contentType }),
+      });
+      const sd = await s.json().catch(() => ({}));
+      if (!s.ok || !sd.ok) {
+        setBusy(false);
+        return toast(sd.error === "bad_type" ? "Use an image or PDF" : "Couldn’t start upload — try again");
+      }
+
+      // 2. upload the slip straight to storage (no serverless size limit)
+      const up = await fetch(sd.signedUrl, { method: "PUT", headers: { "Content-Type": contentType }, body: file });
+      if (!up.ok) {
+        setBusy(false);
+        return toast("Upload failed — please try again");
+      }
+
+      // 3. record the payment (tiny JSON request)
+      const r = await fetch("/api/user/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount, reference, note, slipPath: sd.path }),
+      });
       const d = await r.json().catch(() => ({}));
       setBusy(false);
       if (r.ok && d.ok) {
@@ -57,7 +77,7 @@ export default function InvestorPayments() {
         setAmount(""); setReference(""); setNote(""); setFile(null);
         load();
       } else {
-        toast(d.error === "bad_type" ? "Use an image or PDF" : "Couldn’t submit — try again");
+        toast("Couldn’t submit — try again");
       }
     } catch {
       setBusy(false);
