@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useMarketplace } from "@/context/MarketplaceContext";
 import OmkaramDeed from "@/components/OmkaramDeed";
-import type { Holding } from "@/lib/types";
+import type { Holding, AppUser } from "@/lib/types";
 
 function refFor(id: string, year: number, prefix: string): string {
   let sum = 0;
@@ -17,13 +17,14 @@ const isApproved = (s?: string) => ["approved", "allotted", "confirmed", "funded
 export default function OmkaramAgreementPage() {
   const { currentUser, userReady } = useMarketplace();
   const [holdings, setHoldings] = useState<Holding[]>([]);
+  const [me, setMe] = useState<AppUser | null>(null);
   const [loadedH, setLoadedH] = useState(false);
 
   useEffect(() => {
     if (!currentUser) { setLoadedH(true); return; }
     fetch("/api/user/me")
       .then((r) => r.json())
-      .then((d) => { if (d?.ok) setHoldings(d.holdings || []); })
+      .then((d) => { if (d?.ok) { setHoldings(d.holdings || []); setMe(d.user || null); } })
       .catch(() => {})
       .finally(() => setLoadedH(true));
   }, [currentUser?.id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -67,7 +68,7 @@ export default function OmkaramAgreementPage() {
         <Link href="/dashboard" className="ag-btn ghost">← Back to dashboard</Link>
         <button className="ag-btn gold" onClick={() => window.print()}>Print / Save as PDF</button>
       </div>
-      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={currentUser.pan} aadhaar={currentUser.aadhaar} />
+      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? currentUser.pan} aadhaar={me?.aadhaar ?? currentUser.aadhaar} />
     </div>
   );
 }
