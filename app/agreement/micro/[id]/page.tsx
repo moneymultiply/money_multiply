@@ -76,6 +76,7 @@ export default function MicroAgreementPage() {
         pan={currentUser.pan}
         aadhaar={currentUser.aadhaar}
         address={currentUser.address}
+        execDate={item.createdAt}
       />
     </div>
   );

@@ -43,7 +43,8 @@ export default function OmkaramAgreementPage() {
     );
   }
 
-  const hasOmkaram = holdings.some((h) => /omkaram/i.test(h.title || "") && isApproved(h.status));
+  const omkHolding = holdings.find((h) => /omkaram/i.test(h.title || "") && isApproved(h.status));
+  const hasOmkaram = !!omkHolding;
   if (!loadedH) {
     return <div className="ag-page"><p style={{ color: "#ddd", textAlign: "center" }}>Loading…</p></div>;
   }
@@ -68,7 +69,7 @@ export default function OmkaramAgreementPage() {
         <Link href="/dashboard" className="ag-btn ghost">← Back to dashboard</Link>
         <button className="ag-btn gold" onClick={() => window.print()}>Print / Save as PDF</button>
       </div>
-      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? currentUser.pan} aadhaar={me?.aadhaar ?? currentUser.aadhaar} address={me?.address ?? currentUser.address} />
+      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? currentUser.pan} aadhaar={me?.aadhaar ?? currentUser.aadhaar} address={me?.address ?? currentUser.address} execDate={omkHolding?.createdAt} />
     </div>
   );
 }

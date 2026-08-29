@@ -4,6 +4,7 @@
    name, email and exact contributed amount. Uses the shared .ag-* deed styling. */
 
 import { COMPANY_BANK } from "@/lib/data";
+import { execParts } from "./InvestorDeed";
 
 const Fill = ({ w = 160 }: { w?: number }) => (
   <span className="ag-fill" style={{ minWidth: w }} />
@@ -46,6 +47,7 @@ export default function MicroDeed({
   pan,
   aadhaar,
   address,
+  execDate,
 }: {
   name: string;
   email: string;
@@ -55,8 +57,10 @@ export default function MicroDeed({
   pan?: string;
   aadhaar?: string;
   address?: string;
+  execDate?: string;
 }) {
   const investor = name || "________________________";
+  const ex = execParts(execDate);
   const amt = Math.max(0, Math.round(amount || 0));
   const words = inWords(amt);
 
@@ -107,7 +111,7 @@ export default function MicroDeed({
       <h2 className="ag-h2">1. Parties to the Agreement &amp; Recitals</h2>
       <p>
         This Micro Pool Funding Agreement (hereinafter referred to as the &quot;Agreement&quot;) is entered
-        into on this <Fill w={50} /> day of <Fill w={110} />, 2026 by and between:
+        into on this <Val v={ex.day} w={50} /> day of <Val v={ex.month} w={110} />, {ex.year} by and between:
       </p>
       <p>
         <b>FIRST PARTY (The Company):</b> Money Multiply Trading &amp; Consultant Private Limited, a company

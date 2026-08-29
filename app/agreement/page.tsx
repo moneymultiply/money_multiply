@@ -46,7 +46,8 @@ export default function AgreementPage() {
 
   const u = currentUser;
   const isPartner = u.role === "partner";
-  const hasHimalayan = holdings.some((h) => /himalayan hills/i.test(h.title || "") && isApproved(h.status));
+  const himHolding = holdings.find((h) => /himalayan hills/i.test(h.title || "") && isApproved(h.status));
+  const hasHimalayan = !!himHolding;
 
   // Investors only see the deed once an approved Himalayan Hills investment exists.
   if (!isPartner) {
@@ -78,7 +79,7 @@ export default function AgreementPage() {
       {isPartner ? (
         <PartnerAgreement name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? u.pan} aadhaar={me?.aadhaar ?? u.aadhaar} address={me?.address ?? u.address} />
       ) : (
-        <InvestorDeed name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? u.pan} aadhaar={me?.aadhaar ?? u.aadhaar} address={me?.address ?? u.address} />
+        <InvestorDeed name={u.name} email={u.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? u.pan} aadhaar={me?.aadhaar ?? u.aadhaar} address={me?.address ?? u.address} execDate={himHolding?.createdAt} />
       )}
     </div>
   );

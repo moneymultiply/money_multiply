@@ -2,6 +2,8 @@
    Content transcribed from the official Money Multiply Omkaram co-investment draft, auto-generated
    per investor and personalised with name/email. Uses the shared .ag-* deed styling. */
 
+import { execParts } from "./InvestorDeed";
+
 const Fill = ({ w = 160 }: { w?: number }) => (
   <span className="ag-fill" style={{ minWidth: w }} />
 );
@@ -15,6 +17,7 @@ export default function OmkaramDeed({
   pan,
   aadhaar,
   address,
+  execDate,
 }: {
   name: string;
   email: string;
@@ -23,8 +26,10 @@ export default function OmkaramDeed({
   pan?: string;
   aadhaar?: string;
   address?: string;
+  execDate?: string;
 }) {
   const investor = name || "________________________";
+  const ex = execParts(execDate);
 
   return (
     <div className="ag-doc md-doc">
@@ -56,7 +61,7 @@ export default function OmkaramDeed({
       <h2 className="ag-h2">Master Deed of Co-Investment and Profit-Sharing</h2>
       <p>
         THIS CONFIDENTIAL MASTER DEED OF CO-INVESTMENT AND PROFIT-SHARING (hereinafter the &quot;Deed&quot; or
-        &quot;Agreement&quot;) is made and executed on this <Fill w={50} /> day of <Fill w={110} />, 2026 (the
+        &quot;Agreement&quot;) is made and executed on this <Val v={ex.day} w={50} /> day of <Val v={ex.month} w={110} />, {ex.year} (the
         &quot;Execution Date&quot;), by and between:
       </p>
       <p>

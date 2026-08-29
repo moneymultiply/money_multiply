@@ -10,6 +10,21 @@ const Fill = ({ w = 160 }: { w?: number }) => (
 /** Renders a KYC value if provided, otherwise a blank fill-in line. */
 const Val = ({ v, w = 130 }: { v?: string; w?: number }) => (v ? <b>{v}</b> : <Fill w={w} />);
 
+/** e.g. 15 → "15th" */
+function ordinal(n: number): string {
+  const s = ["th", "st", "nd", "rd"];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+/** Split an execution date into { day: "15th", month: "August", year: "2026" }. */
+export function execParts(execDate?: string): { day: string; month: string; year: string } {
+  if (!execDate) return { day: "", month: "", year: "2026" };
+  const d = new Date(execDate);
+  if (isNaN(d.getTime())) return { day: "", month: "", year: "2026" };
+  return { day: ordinal(d.getDate()), month: d.toLocaleString("en-GB", { month: "long" }), year: String(d.getFullYear()) };
+}
+
 export default function InvestorDeed({
   name,
   email,
@@ -17,6 +32,7 @@ export default function InvestorDeed({
   pan,
   aadhaar,
   address,
+  execDate,
 }: {
   name: string;
   email: string;
@@ -25,8 +41,10 @@ export default function InvestorDeed({
   pan?: string;
   aadhaar?: string;
   address?: string;
+  execDate?: string;
 }) {
   const investor = name || "________________________";
+  const ex = execParts(execDate);
   return (
     <div className="ag-doc">
       {/* letterhead */}
@@ -76,8 +94,8 @@ export default function InvestorDeed({
       <h2 className="ag-h2">Master Deed of Co-Investment and Profit-Sharing</h2>
       <p>
         THIS CONFIDENTIAL MASTER DEED OF CO-INVESTMENT AND PROFIT-SHARING (the &quot;Deed&quot; or
-        &quot;Agreement&quot;) is executed and made legally operational on this <Fill w={60} /> day of{" "}
-        <Fill w={120} />, 2026 (the &quot;Execution Date&quot;), by and between:
+        &quot;Agreement&quot;) is executed and made legally operational on this <Val v={ex.day} w={60} /> day of{" "}
+        <Val v={ex.month} w={120} />, {ex.year} (the &quot;Execution Date&quot;), by and between:
       </p>
       <p>
         <b>MONEY MULTIPLY TRADING &amp; CONSULTANT PRIVATE LIMITED</b>, a company incorporated under the
