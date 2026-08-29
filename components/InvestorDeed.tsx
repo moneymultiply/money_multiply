@@ -16,6 +16,7 @@ export default function InvestorDeed({
   refNo,
   pan,
   aadhaar,
+  address,
 }: {
   name: string;
   email: string;
@@ -23,6 +24,7 @@ export default function InvestorDeed({
   refNo: string;
   pan?: string;
   aadhaar?: string;
+  address?: string;
 }) {
   const investor = name || "________________________";
   return (
@@ -86,7 +88,7 @@ export default function InvestorDeed({
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
         <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing
-        permanently at <Fill w={230} />, bearing Permanent Account Number (PAN): <Val v={pan} w={130} /> and
+        permanently at <Val v={address} w={230} />, bearing Permanent Account Number (PAN): <Val v={pan} w={130} /> and
         Aadhaar Number: <Val v={aadhaar} w={140} /> (the &quot;Co-Investor&quot; or &quot;Second Party&quot;).
       </p>
       <p>

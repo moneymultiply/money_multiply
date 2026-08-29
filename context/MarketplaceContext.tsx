@@ -57,7 +57,7 @@ interface MarketplaceCtx {
   toggleSave: (listingId: string) => Promise<void>;
   isSaved: (listingId: string) => boolean;
   updateBank: (bank: BankDetails) => Promise<{ ok: boolean }>;
-  updateKyc: (pan: string, aadhaar: string) => Promise<{ ok: boolean }>;
+  updateKyc: (pan: string, aadhaar: string, address: string) => Promise<{ ok: boolean }>;
   saveProfile: (name: string, phone: string) => Promise<{ ok: boolean; error?: string }>;
   uploadAvatar: (file: File) => Promise<{ ok: boolean; error?: string }>;
   // modals
@@ -424,16 +424,16 @@ export function MarketplaceProvider({
     }
   }, []);
 
-  const updateKyc = useCallback(async (pan: string, aadhaar: string) => {
+  const updateKyc = useCallback(async (pan: string, aadhaar: string, address: string) => {
     try {
       const r = await fetch("/api/user/kyc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ pan, aadhaar }),
+        body: JSON.stringify({ pan, aadhaar, address }),
       });
       const d = await r.json().catch(() => ({}));
       if (r.ok && d.ok) {
-        setCurrentUser((u) => (u ? { ...u, pan: d.pan as string, aadhaar: d.aadhaar as string } : u));
+        setCurrentUser((u) => (u ? { ...u, pan: d.pan as string, aadhaar: d.aadhaar as string, address: d.address as string } : u));
         return { ok: true };
       }
       return { ok: false };

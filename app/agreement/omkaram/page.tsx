@@ -68,7 +68,7 @@ export default function OmkaramAgreementPage() {
         <Link href="/dashboard" className="ag-btn ghost">← Back to dashboard</Link>
         <button className="ag-btn gold" onClick={() => window.print()}>Print / Save as PDF</button>
       </div>
-      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? currentUser.pan} aadhaar={me?.aadhaar ?? currentUser.aadhaar} />
+      <OmkaramDeed name={currentUser.name} email={currentUser.email} dateStr={dateStr} refNo={refNo} pan={me?.pan ?? currentUser.pan} aadhaar={me?.aadhaar ?? currentUser.aadhaar} address={me?.address ?? currentUser.address} />
     </div>
   );
 }

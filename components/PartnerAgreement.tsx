@@ -15,6 +15,7 @@ export default function PartnerAgreement({
   refNo,
   pan,
   aadhaar,
+  address,
 }: {
   name: string;
   email: string;
@@ -22,6 +23,7 @@ export default function PartnerAgreement({
   refNo: string;
   pan?: string;
   aadhaar?: string;
+  address?: string;
 }) {
   return (
     <div className="ag-doc">
@@ -152,6 +154,7 @@ export default function PartnerAgreement({
           {email && <span className="ag-muted">{email}</span>}
           <span className="ag-muted">PAN: <Val v={pan} w={110} /></span>
           <span className="ag-muted">Aadhaar: <Val v={aadhaar} w={120} /></span>
+          <span className="ag-muted">Address: <Val v={address} w={150} /></span>
           <span className="ag-muted">Authorized Signature &amp; Seal</span>
         </div>
         <div className="ag-sign-col">

@@ -24,6 +24,7 @@ export default function DashboardClient() {
   const [bankSaving, setBankSaving] = useState(false);
   const [pan, setPan] = useState("");
   const [aadhaar, setAadhaar] = useState("");
+  const [address, setAddress] = useState("");
   const [kycSaving, setKycSaving] = useState(false);
   const [editing, setEditing] = useState(false);
   const [eName, setEName] = useState("");
@@ -36,6 +37,7 @@ export default function DashboardClient() {
     if (currentUser.bank) setBank(currentUser.bank);
     setPan(currentUser.pan || "");
     setAadhaar(currentUser.aadhaar || "");
+    setAddress(currentUser.address || "");
     fetch("/api/user/me")
       .then((r) => r.json())
       .then((d) => {
@@ -62,7 +64,7 @@ export default function DashboardClient() {
     if (p && !/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(p)) return toast("Enter a valid 10-character PAN (e.g. ABCDE1234F)");
     if (a && a.length !== 12) return toast("Aadhaar must be 12 digits");
     setKycSaving(true);
-    const r = await updateKyc(p, a);
+    const r = await updateKyc(p, a, address.trim());
     setKycSaving(false);
     toast(r.ok ? "KYC details saved" : "Couldn’t save KYC details");
   };
@@ -403,6 +405,10 @@ export default function DashboardClient() {
                   <label>Aadhaar number</label>
                   <input value={aadhaar} onChange={(e) => setAadhaar(e.target.value.replace(/\D/g, ""))} maxLength={12} inputMode="numeric" placeholder="12-digit number" />
                 </div>
+              </div>
+              <div className="field">
+                <label>Residential address</label>
+                <input value={address} onChange={(e) => setAddress(e.target.value)} maxLength={300} placeholder="House / street, city, state, PIN" />
               </div>
               <button className={"btn-gold" + (kycSaving ? " loading" : "")} onClick={saveKyc} disabled={kycSaving} style={{ padding: "12px 22px" }}>
                 Save KYC details

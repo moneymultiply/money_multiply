@@ -75,6 +75,7 @@ export default function MicroAgreementPage() {
         amount={item.amount}
         pan={currentUser.pan}
         aadhaar={currentUser.aadhaar}
+        address={currentUser.address}
       />
     </div>
   );

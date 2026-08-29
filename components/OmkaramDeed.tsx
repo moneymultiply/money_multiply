@@ -14,6 +14,7 @@ export default function OmkaramDeed({
   refNo,
   pan,
   aadhaar,
+  address,
 }: {
   name: string;
   email: string;
@@ -21,6 +22,7 @@ export default function OmkaramDeed({
   refNo: string;
   pan?: string;
   aadhaar?: string;
+  address?: string;
 }) {
   const investor = name || "________________________";
 
@@ -66,7 +68,7 @@ export default function OmkaramDeed({
       <p style={{ textAlign: "center" }}><b>AND</b></p>
       <p>
         <b>{investor}</b>{email ? ` (${email})` : ""}, son / daughter / spouse of <Fill w={150} />, residing at{" "}
-        <Fill w={230} />, PAN <Val v={pan} w={120} />, Aadhaar / other legally permissible KYC identifier <Val v={aadhaar} w={140} />
+        <Val v={address} w={230} />, PAN <Val v={pan} w={120} />, Aadhaar / other legally permissible KYC identifier <Val v={aadhaar} w={140} />
         {" "}(hereinafter &quot;Co-Investor&quot; or &quot;Second Party&quot;), which expression includes permitted
         legal representatives and assigns.
       </p>
@@ -216,7 +218,7 @@ export default function OmkaramDeed({
           <tr><td>Management Company</td><td><Fill w={200} /></td></tr>
           <tr><td>Co-Investor Name</td><td><b>{investor}</b>{email ? ` · ${email}` : ""}</td></tr>
           <tr><td>PAN / KYC ID</td><td>{pan || aadhaar ? <b>{[pan, aadhaar].filter(Boolean).join(" · ")}</b> : <Fill w={130} />}</td></tr>
-          <tr><td>Address</td><td><Fill w={230} /></td></tr>
+          <tr><td>Address</td><td><Val v={address} w={230} /></td></tr>
           <tr><td>Bank / Account for Disbursement</td><td><Fill w={220} /></td></tr>
         </tbody>
       </table>

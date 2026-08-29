@@ -61,6 +61,7 @@ function rowToUser(r: any): AppUser {
     avatar: r.avatar || "",
     pan: r.pan || "",
     aadhaar: r.aadhaar || "",
+    address: r.address || "",
     resetRequested: !!r.reset_requested,
     createdAt: r.created_at,
   };
@@ -142,13 +143,17 @@ export async function updateProfile(
   return rowToUser(data);
 }
 
-/** Investor/partner KYC — PAN & Aadhaar (normalised, lightly validated). */
-export async function updateKyc(id: string, kyc: { pan?: string; aadhaar?: string }): Promise<{ pan: string; aadhaar: string }> {
+/** Investor/partner KYC — PAN, Aadhaar & address (normalised, lightly validated). */
+export async function updateKyc(
+  id: string,
+  kyc: { pan?: string; aadhaar?: string; address?: string }
+): Promise<{ pan: string; aadhaar: string; address: string }> {
   const pan = String(kyc.pan || "").toUpperCase().replace(/\s+/g, "").slice(0, 10);
   const aadhaar = String(kyc.aadhaar || "").replace(/\D/g, "").slice(0, 12);
-  const { error } = await sb().from(USERS).update({ pan, aadhaar }).eq("id", id);
+  const address = String(kyc.address || "").slice(0, 300);
+  const { error } = await sb().from(USERS).update({ pan, aadhaar, address }).eq("id", id);
   if (error) fail(error);
-  return { pan, aadhaar };
+  return { pan, aadhaar, address };
 }
 
 export async function updateBank(id: string, bank: BankDetails): Promise<BankDetails> {

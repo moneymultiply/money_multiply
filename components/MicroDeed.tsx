@@ -45,6 +45,7 @@ export default function MicroDeed({
   amount,
   pan,
   aadhaar,
+  address,
 }: {
   name: string;
   email: string;
@@ -53,6 +54,7 @@ export default function MicroDeed({
   amount: number;
   pan?: string;
   aadhaar?: string;
+  address?: string;
 }) {
   const investor = name || "________________________";
   const amt = Math.max(0, Math.round(amount || 0));
@@ -226,6 +228,7 @@ export default function MicroDeed({
           <span className="ag-muted">Contribution: {inr(amt)}</span>
           <span className="ag-muted">PAN: <Val v={pan} w={120} /></span>
           <span className="ag-muted">Aadhaar: <Val v={aadhaar} w={130} /></span>
+          <span className="ag-muted">Address: <Val v={address} w={150} /></span>
         </div>
       </div>
 
